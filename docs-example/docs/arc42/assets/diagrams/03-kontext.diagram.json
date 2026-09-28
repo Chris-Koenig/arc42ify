@@ -1,0 +1,22 @@
+{
+  "kind": "boxes",
+  "title": "Fachlicher Kontext",
+  "subtitle": "Bohnenwerk-Shop · arc42 Kapitel 3",
+  "nodes": [
+    {"id": "kunde", "label": "Kund:in", "sublabel": "Browser · Smartphone", "kind": "external", "col": 0, "row": 0},
+    {"id": "team", "label": "Team Rösterei", "sublabel": "Backoffice", "kind": "external", "col": 0, "row": 2},
+    {"id": "shop", "label": "Bohnenwerk-Shop", "sublabel": "web · worker", "kind": "focal", "col": 1, "row": 1},
+    {"id": "psp", "label": "Payment Provider", "sublabel": "Karte · PayPal · SEPA", "kind": "external", "col": 2, "row": 0},
+    {"id": "mail", "label": "Mail-Dienst", "sublabel": "SMTP-Relay", "kind": "external", "col": 2, "row": 1},
+    {"id": "erp", "label": "ERP-System", "sublabel": "Warenwirtschaft", "kind": "external", "col": 2, "row": 2},
+    {"id": "versand", "label": "Versanddienstleister", "sublabel": "Label-API", "kind": "external", "col": 2, "row": 3}
+  ],
+  "edges": [
+    {"from": "kunde", "to": "shop", "label": "Bestellungen, Abos"},
+    {"from": "team", "to": "shop", "label": "Sortiment, Röstplan"},
+    {"from": "shop", "to": "psp", "label": "Zahlungen"},
+    {"from": "shop", "to": "mail", "label": "Bestellmails"},
+    {"from": "shop", "to": "erp", "label": "Aufträge, Bestand"},
+    {"from": "shop", "to": "versand", "label": "Sendungen"}
+  ]
+}

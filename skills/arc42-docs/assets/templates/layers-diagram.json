@@ -1,0 +1,11 @@
+{
+  "kind": "layers",
+  "title": "Querschnittliche Konzepte",
+  "subtitle": "arc42 · Kapitel 8",
+  "layers": [
+    {"label": "Presentation", "items": ["React SPA", "Mobile App"]},
+    {"label": "API / Gateway", "items": ["Auth", "Rate-Limiting", "Validation"], "kind": "focal"},
+    {"label": "Domain-Services", "items": ["Orders", "Billing", "Notifications"]},
+    {"label": "Persistence", "items": ["PostgreSQL", "S3"]}
+  ]
+}

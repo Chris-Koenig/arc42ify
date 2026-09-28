@@ -1,0 +1,21 @@
+{
+  "kind": "boxes",
+  "title": "Bausteinsicht — Ebene 1",
+  "subtitle": "arc42 · Kapitel 5",
+  "groups": [
+    {"id": "g1", "label": "core-service", "nodes": ["api", "domain", "repo"]}
+  ],
+  "nodes": [
+    {"id": "web", "label": "Web-Client", "kind": "external", "col": 0, "row": 1},
+    {"id": "api", "label": "API-Layer", "sublabel": "REST · FastAPI", "kind": "focal", "col": 1, "row": 0},
+    {"id": "domain", "label": "Domain-Logik", "sublabel": "Services", "col": 1, "row": 1},
+    {"id": "repo", "label": "Repository", "sublabel": "SQLAlchemy", "col": 1, "row": 2},
+    {"id": "db", "label": "PostgreSQL", "kind": "external", "col": 2, "row": 2}
+  ],
+  "edges": [
+    {"from": "web", "to": "api", "label": "HTTP/JSON"},
+    {"from": "api", "to": "domain", "label": "ruft auf"},
+    {"from": "domain", "to": "repo", "label": "liest/schreibt"},
+    {"from": "repo", "to": "db", "label": "SQL"}
+  ]
+}

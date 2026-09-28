@@ -1,0 +1,24 @@
+{
+  "kind": "sequence",
+  "title": "Laufzeitsicht — Checkout mit Zahlung",
+  "subtitle": "Bohnenwerk-Shop · arc42 Kapitel 6.1",
+  "numbered": true,
+  "lanes": [
+    {"id": "browser", "label": "Browser"},
+    {"id": "web", "label": "Web-UI · Checkout"},
+    {"id": "best", "label": "Bestellungen"},
+    {"id": "psp", "label": "Payment Provider"}
+  ],
+  "messages": [
+    {"from": "browser", "to": "web", "label": "POST /checkout"},
+    {"from": "web", "to": "best", "label": "anlegen(warenkorb)"},
+    {"from": "best", "to": "psp", "label": "Session anlegen"},
+    {"from": "psp", "to": "best", "label": "session_url", "dashed": true},
+    {"from": "best", "to": "web", "label": "session_url", "dashed": true},
+    {"from": "web", "to": "browser", "label": "303 Zahlungsseite", "dashed": true},
+    {"from": "browser", "to": "psp", "label": "bezahlt (3-D Secure)"},
+    {"from": "psp", "to": "best", "label": "Webhook: bezahlt", "kind": "focal"},
+    {"from": "best", "to": "best", "label": "Status + Outbox"},
+    {"from": "psp", "to": "browser", "label": "Redirect /danke", "dashed": true}
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "kind": "layers",
+  "title": "Querschnittliche Konzepte — wo sie greifen",
+  "subtitle": "Bohnenwerk-Shop · arc42 Kapitel 8",
+  "layers": [
+    {"label": "Web-UI", "items": ["Session-Cookie (HttpOnly)", "CSRF-Token", "Formular-Validierung", "Texte de-DE"]},
+    {"label": "Fachmodule", "items": ["Pydantic-Modelle", "Geldbeträge in Cent", "Zeitzone Europe/Berlin", "Domänen-Events"]},
+    {"label": "Outbox & Worker", "items": ["Transaktionale Outbox", "Retry mit Backoff", "Idempotenz-Keys", "Dead-Letter-Tabelle"], "kind": "focal"},
+    {"label": "Persistenz", "items": ["PostgreSQL 16", "SQLAlchemy 2", "Alembic-Migrationen", "Nächtliches Backup"]},
+    {"label": "Betrieb", "items": ["JSON-Logs", "Korrelations-ID", "Application Insights", "Health-Checks"]}
+  ]
+}

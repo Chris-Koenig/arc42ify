@@ -1,0 +1,24 @@
+{
+  "kind": "boxes",
+  "title": "Bausteinsicht — Ebene 1",
+  "subtitle": "Bohnenwerk-Shop · arc42 Kapitel 5",
+  "nodes": [
+    {"id": "web", "label": "Web-UI", "sublabel": "web/ · Jinja · htmx", "kind": "focal", "col": 0, "row": 1},
+    {"id": "katalog", "label": "Katalog", "sublabel": "katalog/", "col": 1, "row": 0},
+    {"id": "checkout", "label": "Checkout", "sublabel": "checkout/", "col": 1, "row": 1},
+    {"id": "abos", "label": "Abos", "sublabel": "abos/", "col": 1, "row": 2},
+    {"id": "integration", "label": "Integrationen", "sublabel": "integrationen/", "col": 2, "row": 0},
+    {"id": "bestellungen", "label": "Bestellungen", "sublabel": "bestellungen/", "col": 2, "row": 1},
+    {"id": "roestplan", "label": "Röstplanung", "sublabel": "roestplanung/", "col": 2, "row": 2}
+  ],
+  "edges": [
+    {"from": "web", "to": "katalog"},
+    {"from": "web", "to": "checkout"},
+    {"from": "web", "to": "abos"},
+    {"from": "checkout", "to": "bestellungen", "label": "legt an"},
+    {"from": "abos", "to": "bestellungen", "label": "erzeugt fällige"},
+    {"from": "bestellungen", "to": "integration", "label": "Zahlung, Versand, ERP"},
+    {"from": "roestplan", "to": "bestellungen", "label": "liest offene Posten"},
+    {"from": "integration", "to": "katalog", "label": "Bestände"}
+  ]
+}

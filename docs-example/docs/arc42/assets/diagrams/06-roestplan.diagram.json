@@ -1,0 +1,20 @@
+{
+  "kind": "sequence",
+  "title": "Laufzeitsicht — Röstplan zum Cutoff",
+  "subtitle": "Bohnenwerk-Shop · arc42 Kapitel 6.2",
+  "numbered": true,
+  "lanes": [
+    {"id": "worker", "label": "Worker (Cron)"},
+    {"id": "roest", "label": "Röstplanung"},
+    {"id": "best", "label": "Bestellungen"},
+    {"id": "mail", "label": "Mail-Dienst"}
+  ],
+  "messages": [
+    {"from": "worker", "to": "roest", "label": "cutoff(heute)"},
+    {"from": "roest", "to": "best", "label": "offene Posten ≤ 12:00"},
+    {"from": "best", "to": "roest", "label": "Posten je Sorte", "dashed": true},
+    {"from": "roest", "to": "roest", "label": "Chargen bilden", "kind": "focal"},
+    {"from": "roest", "to": "best", "label": "Charge zuordnen"},
+    {"from": "roest", "to": "mail", "label": "Röstplan an Team"}
+  ]
+}

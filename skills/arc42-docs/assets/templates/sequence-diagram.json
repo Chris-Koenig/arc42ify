@@ -1,0 +1,19 @@
+{
+  "kind": "sequence",
+  "title": "Laufzeitsicht — Login mit Token-Refresh",
+  "subtitle": "arc42 · Kapitel 6",
+  "lanes": [
+    {"id": "client", "label": "Client"},
+    {"id": "api", "label": "API Gateway"},
+    {"id": "auth", "label": "Auth-Service"}
+  ],
+  "messages": [
+    {"from": "client", "to": "api", "label": "POST /login"},
+    {"from": "api", "to": "auth", "label": "validate()", "kind": "focal"},
+    {"from": "auth", "to": "api", "label": "200 + JWT", "dashed": true},
+    {"from": "api", "to": "client", "label": "200 + JWT", "dashed": true},
+    {"from": "client", "to": "api", "label": "GET /me (401)"},
+    {"from": "api", "to": "auth", "label": "refresh()", "kind": "focal"},
+    {"from": "auth", "to": "client", "label": "new JWT", "dashed": true}
+  ]
+}

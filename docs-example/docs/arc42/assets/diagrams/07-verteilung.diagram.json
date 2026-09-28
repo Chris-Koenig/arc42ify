@@ -1,0 +1,26 @@
+{
+  "kind": "boxes",
+  "title": "Verteilungssicht — Produktion",
+  "subtitle": "Bohnenwerk-Shop · arc42 Kapitel 7",
+  "groups": [
+    {"id": "azure", "label": "Azure · Germany West Central", "nodes": ["frontdoor", "web", "db", "worker", "redis"]}
+  ],
+  "nodes": [
+    {"id": "browser", "label": "Browser", "sublabel": "Kund:in · Team", "kind": "external", "col": 0, "row": 0},
+    {"id": "partner", "label": "SaaS-Partner", "sublabel": "PSP, ERP, Mail, Versand", "kind": "external", "col": 0, "row": 3},
+    {"id": "frontdoor", "label": "Front Door", "sublabel": "CDN · TLS · WAF", "col": 1, "row": 0},
+    {"id": "web", "label": "Web-App", "sublabel": "Container · 2 Instanzen", "kind": "focal", "col": 1, "row": 1},
+    {"id": "db", "label": "PostgreSQL 16", "sublabel": "Flexible Server", "col": 1, "row": 2},
+    {"id": "worker", "label": "Worker", "sublabel": "Container · 1 Instanz", "col": 1, "row": 3},
+    {"id": "redis", "label": "Redis", "sublabel": "Job-Queue · Sessions", "col": 2, "row": 2}
+  ],
+  "edges": [
+    {"from": "browser", "to": "frontdoor", "label": "HTTPS"},
+    {"from": "frontdoor", "to": "web", "label": "HTTPS (Private Link)"},
+    {"from": "web", "to": "db", "label": "TCP 5432"},
+    {"from": "worker", "to": "db", "label": "TCP 5432"},
+    {"from": "web", "to": "redis", "label": "TLS 6380"},
+    {"from": "worker", "to": "redis", "label": "TLS 6380"},
+    {"from": "worker", "to": "partner", "label": "HTTPS"}
+  ]
+}

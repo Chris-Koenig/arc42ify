@@ -1,0 +1,16 @@
+{
+  "name": "arc42ify",
+  "description": "arc42-Architekturdokumentation mit editorialen SVG-Diagrammen — als Agent-Skill für Claude Code, GitHub Copilot und OpenAI Codex.",
+  "owner": {
+    "name": "Christoph König",
+    "url": "https://github.com/Chris-Koenig"
+  },
+  "plugins": [
+    {
+      "name": "arc42-docs",
+      "source": "./",
+      "description": "Erzeugt und aktualisiert arc42-Architekturdokumentation (12 Kapitel, editoriale SVG-Diagramme) aus Code, Ideen oder Texten.",
+      "version": "1.0.0"
+    }
+  ]
+}

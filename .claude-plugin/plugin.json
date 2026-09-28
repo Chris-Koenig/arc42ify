@@ -1,0 +1,13 @@
+{
+  "name": "arc42-docs",
+  "version": "1.0.0",
+  "description": "Erzeugt und aktualisiert arc42-Architekturdokumentation (12 Kapitel, editoriale SVG-Diagramme) aus Code, Ideen oder Texten — als Markdown + SVG direkt im Repo unter docs/arc42/.",
+  "author": {
+    "name": "Christoph König",
+    "url": "https://github.com/Chris-Koenig"
+  },
+  "homepage": "https://github.com/Chris-Koenig/arc42ify",
+  "repository": "https://github.com/Chris-Koenig/arc42ify",
+  "license": "MIT",
+  "keywords": ["arc42", "architecture", "documentation", "diagrams", "agent-skills"]
+}
