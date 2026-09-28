@@ -14,11 +14,13 @@ relevanten Code-Änderung.
 
 ## Was es ist
 
-- Ein **Agent Skill** (`skills/arc42ify/`): eine Anleitung + zwei
-  Python-Scripts, die aus Code/Ideen/Texten arc42-konforme Markdown-Kapitel
-  plus editoriale SVG-Diagramme erzeugen — direkt im Repo unter `docs/arc42/`.
-- Ein **Renderer** ohne Fremdabhängigkeiten (`render_diagram.py`): fünf
-  Diagrammtypen, ein Design-System (ein Akzent, keine Schatten,
+- Ein **Agent Skill** (`skills/arc42ify/`): eine Anleitung + drei
+  Python-Scripts (Gerüst, Renderer, Selbstcheck), die aus Code/Ideen/Texten
+  arc42-konforme Markdown-Kapitel plus editoriale SVG-Diagramme erzeugen —
+  direkt im Repo unter `docs/arc42/`.
+- Ein **Renderer** ohne Fremdabhängigkeiten (`render_diagram.py`): drei
+  Diagrammarten (`boxes`, `layers`, `sequence`) mit fünf Vorlagen, ein
+  Design-System (ein Akzent, keine Schatten,
   Hairline-Rahmen, 4px-Raster), lauffähig in jeder Sandbox, jedem CI-Runner,
   offline.
 - Ein **installierbares Claude-Code-Plugin** (`.claude-plugin/`), damit die
@@ -27,7 +29,7 @@ relevanten Code-Änderung.
 ## Was es nicht ist
 
 - Kein Ersatz für API-Referenzdokumentation (OpenAPI/Docstrings).
-- Kein generischer Diagramm-Editor — die fünf Typen sind bewusst auf das
+- Kein generischer Diagramm-Editor — die drei Arten sind bewusst auf das
   beschränkt, was arc42 tatsächlich braucht (Kontext, Bausteine, Verteilung,
   Laufzeit, Querschnittskonzepte).
 - Kein Ersatz für menschliches Architektur-Review — der Skill sammelt und

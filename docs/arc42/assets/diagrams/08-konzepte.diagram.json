@@ -1,0 +1,12 @@
+{
+  "kind": "layers",
+  "title": "Querschnittliche Konzepte — wo sie greifen",
+  "subtitle": "arc42ify · arc42 Kapitel 8",
+  "layers": [
+    {"label": "Agent-Anleitung", "items": ["description ≤ 1024 Zeichen", "SKILL.md < 500 Zeilen", "Referenzen bei Bedarf", "Text vor Bild"]},
+    {"label": "Kommandozeile", "items": ["Exit-Code 0/1", "Meldung sagt, was zu tun ist", "cp1252-sicher", "scaffold idempotent"]},
+    {"label": "Layout", "items": ["col/row-Raster", "Router auf 12px-Gitter", "geschätzte Textbreiten", "vom Selbstcheck mitgenutzt"], "kind": "focal"},
+    {"label": "Zeichnen", "items": ["Design-Tokens", "snap() auf 4px", "ein Akzent, keine Schatten", "LF-Zeilenenden"]},
+    {"label": "Absicherung", "items": ["Fail-Fixture je Regel", "Byte-Vergleich", "CI: 3.8, 3.13, Windows"]}
+  ]
+}

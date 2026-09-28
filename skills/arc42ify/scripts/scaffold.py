@@ -51,29 +51,40 @@ CHAPTERS_EN = [
     ("12-glossary", "12. Glossary", None),
 ]
 
+# The scripts live in the skill folder, not in the target repo, so the index
+# names them without a path that would only resolve inside the skill.
 INDEX_BODY_DE = """> Diese Dokumentation folgt [arc42](https://arc42.de/). Erzeugt und
-> gepflegt mit dem `arc42ify`-Skill — Diagramme liegen als SVG unter
-> `assets/diagrams/` und werden aus `*.diagram.json`-Specs im selben Ordner
-> generiert (`python3 scripts/render_diagram.py <spec>.json <ziel>.svg`,
-> siehe das Skill-Repo für das Script).
+> gepflegt mit dem `arc42ify`-Skill. Diagramme liegen als SVG unter
+> `assets/diagrams/`, jeweils neben der `*.diagram.json`-Spec, aus der sie
+> entstehen. Geändert wird immer die Spec; danach mit `render_diagram.py`
+> neu rendern und mit `self_check.py` prüfen — beide liegen im Ordner
+> `scripts/` des Skills (z. B. `.claude/skills/arc42ify/scripts/`).
 
-| Kapitel | Datei |
+| Kapitel | Status |
 |---|---|
 {toc}
 """
 
 INDEX_BODY_EN = """> This documentation follows [arc42](https://arc42.org/). Generated and
-> maintained with the `arc42ify` skill — diagrams live as SVG under
-> `assets/diagrams/`, generated from `*.diagram.json` specs in the same
-> folder (`python3 scripts/render_diagram.py <spec>.json <target>.svg`, see
-> the skill repo for the script).
+> maintained with the `arc42ify` skill. Diagrams live as SVG under
+> `assets/diagrams/`, next to the `*.diagram.json` spec they are rendered
+> from. Always change the spec, then re-render with `render_diagram.py` and
+> check with `self_check.py` — both live in the skill's `scripts/` folder
+> (e.g. `.claude/skills/arc42ify/scripts/`).
 
-| Chapter | File |
+| Chapter | Status |
 |---|---|
 {toc}
 """
 
-CHAPTER_STUB = """<!-- status: draft -->
+# Status values match SKILL.md: vollständig/Entwurf/TODO (complete/draft/TODO).
+CHAPTER_STUB_DE = """<!-- status: TODO -->
+
+_TODO: wird vom arc42ify-Skill ausgefüllt. Was in dieses Kapitel gehört und
+wo es im Code steht, beschreibt references/arc42-sections.md im Skill._
+"""
+
+CHAPTER_STUB_EN = """<!-- status: TODO -->
 
 _TODO: filled in by the arc42ify agent skill. See
 references/arc42-sections.md in the skill for what belongs in this chapter
@@ -101,14 +112,15 @@ def main():
 
     chapters = CHAPTERS_DE if args.lang == "de" else CHAPTERS_EN
     index_body = INDEX_BODY_DE if args.lang == "de" else INDEX_BODY_EN
+    chapter_stub = CHAPTER_STUB_DE if args.lang == "de" else CHAPTER_STUB_EN
 
     base = os.path.join(args.target_repo, "docs", "arc42")
     os.makedirs(os.path.join(base, "assets", "diagrams"), exist_ok=True)
 
     toc_lines = []
     for slug, title, _diagram_kind in chapters[1:]:
-        toc_lines.append(f"| {title} | [{slug}.md]({slug}.md) |")
-        write_if_missing(os.path.join(base, f"{slug}.md"), f"# {title}\n\n{CHAPTER_STUB}")
+        toc_lines.append(f"| [{title}]({slug}.md) | TODO |")
+        write_if_missing(os.path.join(base, f"{slug}.md"), f"# {title}\n\n{chapter_stub}")
 
     index_slug, index_title, _ = chapters[0]
     write_if_missing(

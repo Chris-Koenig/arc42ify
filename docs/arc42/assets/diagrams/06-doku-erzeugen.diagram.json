@@ -1,0 +1,26 @@
+{
+  "kind": "sequence",
+  "title": "Laufzeitsicht — Doku für ein Repo erzeugen",
+  "subtitle": "arc42ify · arc42 Kapitel 6.1",
+  "numbered": true,
+  "lanes": [
+    {"id": "nutzer", "label": "Nutzer:in"},
+    {"id": "host", "label": "Agent-Host"},
+    {"id": "scripts", "label": "Skill-Scripts"},
+    {"id": "repo", "label": "Ziel-Repo"}
+  ],
+  "messages": [
+    {"from": "nutzer", "to": "host", "label": "Auftrag + Zielgruppe"},
+    {"from": "host", "to": "host", "label": "SKILL.md laden"},
+    {"from": "host", "to": "repo", "label": "Code, Config lesen"},
+    {"from": "host", "to": "scripts", "label": "scaffold.py"},
+    {"from": "scripts", "to": "repo", "label": "docs/arc42/ anlegen"},
+    {"from": "host", "to": "repo", "label": "Kapiteltext schreiben"},
+    {"from": "host", "to": "repo", "label": "*.diagram.json schreiben"},
+    {"from": "host", "to": "scripts", "label": "render_diagram.py"},
+    {"from": "scripts", "to": "repo", "label": "SVG schreiben"},
+    {"from": "host", "to": "scripts", "label": "self_check.py"},
+    {"from": "scripts", "to": "host", "label": "OK | FAIL", "dashed": true, "kind": "focal"},
+    {"from": "host", "to": "nutzer", "label": "Zusammenfassung", "dashed": true}
+  ]
+}

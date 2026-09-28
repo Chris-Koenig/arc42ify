@@ -1,0 +1,21 @@
+{
+  "kind": "boxes",
+  "title": "Fachlicher Kontext",
+  "subtitle": "arc42ify · arc42 Kapitel 3",
+  "nodes": [
+    {"id": "market", "label": "GitHub-Marketplace", "sublabel": "Chris-Koenig/arc42ify", "kind": "external", "col": 1, "row": 0},
+    {"id": "leser", "label": "Leser:innen", "kind": "external", "col": 3, "row": 0},
+    {"id": "nutzer", "label": "Nutzer:in", "kind": "external", "col": 0, "row": 1},
+    {"id": "host", "label": "Agent-Host", "sublabel": "Claude · Copilot · Codex", "kind": "external", "col": 1, "row": 1},
+    {"id": "skill", "label": "arc42ify", "sublabel": "skills/arc42ify/", "kind": "focal", "col": 2, "row": 1},
+    {"id": "repo", "label": "Ziel-Repo", "sublabel": "docs/arc42/", "kind": "external", "col": 3, "row": 1}
+  ],
+  "edges": [
+    {"from": "nutzer", "to": "host", "label": "Auftrag"},
+    {"from": "market", "to": "host", "label": "Plugin-Install"},
+    {"from": "host", "to": "skill", "label": "lädt SKILL.md"},
+    {"from": "repo", "to": "skill", "label": "Code, README"},
+    {"from": "skill", "to": "repo", "label": "Markdown + SVG", "kind": "focal"},
+    {"from": "leser", "to": "repo", "label": "liest"}
+  ]
+}

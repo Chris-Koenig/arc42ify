@@ -1,0 +1,27 @@
+{
+  "kind": "boxes",
+  "title": "Verteilung",
+  "subtitle": "arc42ify · arc42 Kapitel 7",
+  "nodes": [
+    {"id": "gh", "label": "arc42ify-Repo", "sublabel": "master", "col": 0, "row": 0},
+    {"id": "ci", "label": "GitHub Actions", "sublabel": "3 × Python/OS", "col": 0, "row": 1},
+    {"id": "plugin", "label": "Plugin-Install", "sublabel": "Cache des Hosts", "kind": "focal", "col": 1, "row": 0},
+    {"id": "copy", "label": "Ordner-Kopie", "sublabel": "…/skills/arc42ify/", "kind": "focal", "col": 1, "row": 1},
+    {"id": "host", "label": "Agent-Host", "sublabel": "Claude · Copilot · Codex", "kind": "external", "col": 2, "row": 0},
+    {"id": "py", "label": "Python ≥ 3.8", "sublabel": "stdlib, offline", "kind": "external", "col": 2, "row": 1},
+    {"id": "repo", "label": "Ziel-Repo", "sublabel": "docs/arc42/", "kind": "external", "col": 3, "row": 1}
+  ],
+  "edges": [
+    {"from": "gh", "to": "ci", "label": "Push, PR"},
+    {"from": "gh", "to": "plugin", "label": "marketplace"},
+    {"from": "gh", "to": "copy", "label": "clone + cp"},
+    {"from": "plugin", "to": "host", "label": "lädt"},
+    {"from": "copy", "to": "host", "label": "lädt"},
+    {"from": "host", "to": "py", "label": "startet"},
+    {"from": "py", "to": "repo", "label": "schreibt"}
+  ],
+  "groups": [
+    {"id": "github", "label": "github.com", "nodes": ["gh", "ci"]},
+    {"id": "local", "label": "Rechner oder Cloud-Agent", "nodes": ["plugin", "copy", "host", "py", "repo"]}
+  ]
+}

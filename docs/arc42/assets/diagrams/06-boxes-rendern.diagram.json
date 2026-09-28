@@ -1,0 +1,28 @@
+{
+  "kind": "sequence",
+  "title": "Laufzeitsicht — ein boxes-Diagramm rendern",
+  "subtitle": "render_diagram.py · arc42 Kapitel 6.2",
+  "numbered": true,
+  "lanes": [
+    {"id": "render", "label": "render()"},
+    {"id": "svg", "label": "render_svg()"},
+    {"id": "boxes", "label": "render_boxes()"},
+    {"id": "layout", "label": "layout_boxes()"},
+    {"id": "router", "label": "Router"}
+  ],
+  "messages": [
+    {"from": "render", "to": "svg", "label": "Spec aus JSON"},
+    {"from": "svg", "to": "svg", "label": "merge_theme()"},
+    {"from": "svg", "to": "boxes", "label": "RENDERERS[kind]"},
+    {"from": "boxes", "to": "layout", "label": "layout_boxes(spec)"},
+    {"from": "layout", "to": "layout", "label": "node_rect, Gruppen"},
+    {"from": "layout", "to": "router", "label": "Router(boxes)"},
+    {"from": "layout", "to": "router", "label": "route() je Kante", "kind": "focal"},
+    {"from": "router", "to": "layout", "label": "Polylinie", "dashed": true},
+    {"from": "layout", "to": "layout", "label": "place_label()"},
+    {"from": "layout", "to": "boxes", "label": "Geometrie", "dashed": true},
+    {"from": "boxes", "to": "svg", "label": "(w, h, svg)", "dashed": true},
+    {"from": "svg", "to": "render", "label": "SVG mit Titel", "dashed": true},
+    {"from": "render", "to": "render", "label": "Datei (LF)"}
+  ]
+}

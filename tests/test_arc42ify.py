@@ -38,12 +38,15 @@ def rel(path):
 
 
 def shipped_diagrams():
-    """(spec, committed svg) for the templates and the docs example."""
+    """(spec, committed svg) for the templates, the docs example and this
+    repo's own arc42 docs."""
     pairs = [(s, s[:-len(".json")] + ".svg")
              for s in sorted(glob.glob(os.path.join(SKILL, "assets", "templates", "*.json")))]
-    pairs += [(s, s[:-len(".diagram.json")] + ".svg")
-              for s in sorted(glob.glob(os.path.join(
-                  ROOT, "docs-example", "docs", "arc42", "assets", "diagrams", "*.diagram.json")))]
+    for docs in (os.path.join(ROOT, "docs-example", "docs", "arc42"),
+                 os.path.join(ROOT, "docs", "arc42")):
+        pairs += [(s, s[:-len(".diagram.json")] + ".svg")
+                  for s in sorted(glob.glob(os.path.join(
+                      docs, "assets", "diagrams", "*.diagram.json")))]
     return pairs
 
 
@@ -63,7 +66,11 @@ def run_script(name, *args, env=None):
 class ShippedDiagrams(unittest.TestCase):
 
     def test_found_all_diagrams(self):
-        self.assertGreaterEqual(len(shipped_diagrams()), 12)
+        pairs = shipped_diagrams()
+        self.assertGreaterEqual(len(pairs), 12)
+        for folder in ("skills/arc42ify/assets/templates/", "docs-example/", "docs/arc42/"):
+            with self.subTest(folder=folder):
+                self.assertTrue(any(rel(s).startswith(folder) for s, _ in pairs))
 
     def test_specs_pass_self_check(self):
         for spec_path, _ in shipped_diagrams():
@@ -241,6 +248,20 @@ class Scaffold(unittest.TestCase):
                 self.assertEqual(len(chapters), 13)
                 self.assertTrue(chapters[0].startswith("00-"))
                 self.assertTrue(os.path.isfile(os.path.join(base, "assets", "diagrams", ".gitkeep")))
+
+    def test_index_tracks_status_and_stubs_match_the_language(self):
+        stubs = {"de": "wird vom arc42ify-Skill ausgefüllt", "en": "filled in by the arc42ify"}
+        for lang, stub in stubs.items():
+            with self.subTest(lang=lang), tempfile.TemporaryDirectory() as tmp:
+                run_script("scaffold.py", tmp, "--lang", lang)
+                index, *chapters = sorted(glob.glob(os.path.join(tmp, "docs", "arc42", "*.md")))
+                with open(index, encoding="utf-8") as f:
+                    text = f.read()
+                self.assertIn("| Status |", text)
+                self.assertNotIn("scripts/render_diagram.py", text)
+                for chapter in chapters:
+                    with open(chapter, encoding="utf-8") as f:
+                        self.assertIn(stub, f.read())
 
     def test_never_overwrites_existing_chapters(self):
         with tempfile.TemporaryDirectory() as tmp:

@@ -1,7 +1,7 @@
 # Contributing
 
 Danke für Interesse an `arc42ify`. Der Umfang ist bewusst klein gehalten
-(fünf Diagrammtypen, zwei Scripts) — Beiträge, die diese Einfachheit
+(drei Diagrammarten mit fünf Vorlagen, drei Scripts) — Beiträge, die diese Einfachheit
 erhalten, sind am willkommensten.
 
 ## Einen neuen Diagrammtyp ergänzen
@@ -45,7 +45,8 @@ python3 -m unittest discover -s tests -v
 
 Nur Standardbibliothek, keine Installation nötig. Die Tests prüfen:
 
-- alle Beispiel-Diagramme (Vorlagen und `docs-example/`) bestehen den
+- alle ausgelieferten Diagramme (Vorlagen, `docs-example/` und die eigene
+  Architekturdoku unter `docs/arc42/`) bestehen den
   Selbstcheck, und jedes eingecheckte SVG ist identisch mit einem frischen
   Render — ein veraltetes SVG nennt den Befehl zum Neu-Rendern;
 - der Router: Kanten rechtwinklig, mit Abstand zu fremden Boxen, jedes
@@ -65,7 +66,7 @@ Windows.
 
 ## Stil
 
-- Kein Fremdabhängigkeiten in den Scripts (nur Python-Stdlib) — das ist
+- Keine Fremdabhängigkeiten in den Scripts (nur Python-Stdlib) — das ist
   der Grund, warum der Renderer in jeder Sandbox identisch läuft. Neue
   Abhängigkeiten (z. B. für PNG-Export) gehören in ein optionales,
   klar als solches gekennzeichnetes Zusatz-Script, nie in

@@ -1,0 +1,24 @@
+{
+  "kind": "boxes",
+  "title": "Whitebox Skill — Ebene 2",
+  "subtitle": "arc42ify · arc42 Kapitel 5.2",
+  "nodes": [
+    {"id": "refs", "label": "references/", "sublabel": "4 × Markdown", "col": 0, "row": 0},
+    {"id": "skillmd", "label": "SKILL.md", "sublabel": "Ablauf + Regeln", "kind": "focal", "col": 1, "row": 0},
+    {"id": "templates", "label": "assets/templates/", "sublabel": "5 Beispiel-Specs", "col": 2, "row": 0},
+    {"id": "scaffold", "label": "scaffold.py", "sublabel": "Gerüst docs/arc42/", "col": 0, "row": 1},
+    {"id": "render", "label": "render_diagram.py", "sublabel": "Spec → SVG", "col": 1, "row": 1},
+    {"id": "check", "label": "self_check.py", "sublabel": "Spec + SVG prüfen", "col": 2, "row": 1}
+  ],
+  "edges": [
+    {"from": "skillmd", "to": "refs", "label": "lädt bei Bedarf"},
+    {"from": "skillmd", "to": "templates", "label": "Startpunkte"},
+    {"from": "skillmd", "to": "scaffold", "label": "1 · Gerüst"},
+    {"from": "skillmd", "to": "render", "label": "2 · rendern"},
+    {"from": "skillmd", "to": "check", "label": "3 · prüfen"},
+    {"from": "check", "to": "render", "label": "import layout_*", "kind": "focal"}
+  ],
+  "groups": [
+    {"id": "scripts", "label": "scripts/", "nodes": ["scaffold", "render", "check"]}
+  ]
+}
