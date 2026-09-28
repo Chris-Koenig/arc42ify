@@ -1,0 +1,24 @@
+{
+  "kind": "boxes",
+  "nodes": [
+    {
+      "id": "a",
+      "label": "A",
+      "col": 0,
+      "row": 0
+    },
+    {
+      "id": "b",
+      "label": "B",
+      "col": 1,
+      "row": 0
+    },
+    {
+      "id": "c",
+      "label": "Ein sehr langer Knotenname der nicht passt",
+      "col": 2,
+      "row": 0
+    }
+  ],
+  "edges": []
+}

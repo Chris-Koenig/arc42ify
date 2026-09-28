@@ -14,7 +14,7 @@ relevanten Code-Änderung.
 
 ## Was es ist
 
-- Ein **Agent Skill** (`skills/arc42-docs/`): eine Anleitung + zwei
+- Ein **Agent Skill** (`skills/arc42ify/`): eine Anleitung + zwei
   Python-Scripts, die aus Code/Ideen/Texten arc42-konforme Markdown-Kapitel
   plus editoriale SVG-Diagramme erzeugen — direkt im Repo unter `docs/arc42/`.
 - Ein **Renderer** ohne Fremdabhängigkeiten (`render_diagram.py`): fünf

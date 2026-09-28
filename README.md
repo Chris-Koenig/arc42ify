@@ -25,10 +25,10 @@ fiktiven Online-Shops einer Kaffeerösterei, alle 12 Kapitel, 7 Diagramme.
 
 | Host | Schnellste Installation |
 |---|---|
-| **Claude Code** | `/plugin marketplace add Chris-Koenig/arc42ify` und `/plugin install arc42-docs@arc42ify` |
-| **GitHub Copilot** (CLI) | `copilot plugin install Chris-Koenig/arc42ify` |
-| **GitHub Copilot** (VS Code, Cloud-Agent) | `skills/arc42-docs` nach `.github/skills/arc42-docs` im Repo kopieren |
-| **OpenAI Codex** | `skills/arc42-docs` nach `~/.agents/skills/arc42-docs` (persönlich) oder `.agents/skills/arc42-docs` (Repo) kopieren |
+| **Claude Code** | `/plugin marketplace add Chris-Koenig/arc42ify` und `/plugin install arc42ify@arc42ify` |
+| **GitHub Copilot** (CLI) | `copilot plugin marketplace add Chris-Koenig/arc42ify` und `copilot plugin install arc42ify@arc42ify` |
+| **GitHub Copilot** (VS Code, Cloud-Agent) | `skills/arc42ify` nach `.github/skills/arc42ify` im Repo kopieren |
+| **OpenAI Codex** | `codex plugin marketplace add Chris-Koenig/arc42ify` und `codex plugin add arc42ify@arc42ify` |
 
 Ein Repo für ein Team mit gemischten Agenten, Aktualisieren, Entfernen und
 Fehlersuche: **[docs/installation.md](docs/installation.md)**.
@@ -41,15 +41,15 @@ Terminal-Zugriff.
 Im Root des Repos, das dokumentiert werden soll:
 
 ```text
-/arc42-docs Erstelle eine arc42-Doku für dieses Repo. Zielgruppe sind
+/arc42ify Erstelle eine arc42-Doku für dieses Repo. Zielgruppe sind
 neue Entwickler:innen im Team.
 ```
 
 | Host | Ausdrücklich aufrufen |
 |---|---|
-| Claude Code | `/arc42-docs` (als Plugin: `/arc42-docs:arc42-docs`) |
-| GitHub Copilot | `/arc42-docs` |
-| OpenAI Codex | `$arc42-docs` |
+| Claude Code | `/arc42ify` (als Plugin: `/arc42ify:arc42ify`) |
+| GitHub Copilot | `/arc42ify` |
+| OpenAI Codex | `$arc42ify` |
 
 Ohne ausdrücklichen Aufruf springt der Skill an, sobald die Bitte nach
 Architekturdoku klingt. Weitere Aufträge — Idee ohne Code dokumentieren,
@@ -62,12 +62,12 @@ Die Scripts sind eigenständige CLI-Tools:
 
 ```bash
 # Gerüst im Ziel-Repo anlegen
-python3 skills/arc42-docs/scripts/scaffold.py /pfad/zum/repo --lang de
+python3 skills/arc42ify/scripts/scaffold.py /pfad/zum/repo --lang de
 
 # Diagramm: Spec kopieren, anpassen, rendern, prüfen
-cp skills/arc42-docs/assets/templates/context-diagram.json 03-kontext.diagram.json
-python3 skills/arc42-docs/scripts/render_diagram.py 03-kontext.diagram.json /pfad/zum/repo/docs/arc42/assets/diagrams/03-kontext.svg
-python3 skills/arc42-docs/scripts/self_check.py 03-kontext.diagram.json /pfad/zum/repo/docs/arc42/assets/diagrams/03-kontext.svg
+cp skills/arc42ify/assets/templates/context-diagram.json 03-kontext.diagram.json
+python3 skills/arc42ify/scripts/render_diagram.py 03-kontext.diagram.json /pfad/zum/repo/docs/arc42/assets/diagrams/03-kontext.svg
+python3 skills/arc42ify/scripts/self_check.py 03-kontext.diagram.json /pfad/zum/repo/docs/arc42/assets/diagrams/03-kontext.svg
 ```
 
 ## Struktur
@@ -75,9 +75,14 @@ python3 skills/arc42-docs/scripts/self_check.py 03-kontext.diagram.json /pfad/zu
 ```
 arc42ify/
 ├── .claude-plugin/
-│   ├── marketplace.json           — Marketplace-Katalog (ein Eintrag: arc42-docs)
+│   ├── marketplace.json           — Marketplace-Katalog (ein Eintrag: arc42ify)
 │   └── plugin.json                — Plugin-Manifest (Claude Code, Copilot CLI)
-├── skills/arc42-docs/             — der Skill; dieser Ordner wird installiert
+├── .codex-plugin/
+│   └── plugin.json                — Plugin-Manifest für Codex (gleicher Skill-Ordner)
+├── .agents/plugins/
+│   └── marketplace.json           — Marketplace-Katalog für Codex
+├── .github/workflows/ci.yml       — führt tests/ bei jedem Push und Pull Request aus
+├── skills/arc42ify/               — der Skill; dieser Ordner wird installiert
 │   ├── SKILL.md                   — Ablauf, Kapitelzuordnung, wann kein Diagramm
 │   ├── references/
 │   │   ├── arc42-sections.md      — alle 12 Kapitel: Inhalt, Quelle im Code, Diagrammtyp
@@ -94,6 +99,7 @@ arc42ify/
 │   ├── usage.md                   — Aufträge, Diagramme ändern und prüfen, CI
 │   └── vision.md                  — Zweck, Prinzipien, Roadmap, Non-Goals
 ├── docs-example/                  — vollständiges Beispiel: Bohnenwerk-Shop (fiktiv)
+├── tests/                         — Diagramme, Router, Selbstcheck (mit kaputten Fixtures), Manifeste
 └── CONTRIBUTING.md                — neuen Diagrammtyp/Kapitel ergänzen, PR-Checkliste
 ```
 

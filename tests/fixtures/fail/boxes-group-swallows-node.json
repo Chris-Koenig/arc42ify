@@ -1,0 +1,39 @@
+{
+  "kind": "boxes",
+  "nodes": [
+    {
+      "id": "a",
+      "label": "A",
+      "col": 0,
+      "row": 0
+    },
+    {
+      "id": "b",
+      "label": "B",
+      "col": 1,
+      "row": 0
+    },
+    {
+      "id": "c",
+      "label": "C",
+      "col": 2,
+      "row": 0
+    }
+  ],
+  "groups": [
+    {
+      "id": "g",
+      "label": "outer",
+      "nodes": [
+        "a",
+        "c"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "a",
+      "to": "b"
+    }
+  ]
+}

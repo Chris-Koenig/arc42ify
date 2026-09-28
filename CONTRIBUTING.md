@@ -6,7 +6,7 @@ erhalten, sind am willkommensten.
 
 ## Einen neuen Diagrammtyp ergänzen
 
-1. In `skills/arc42-docs/scripts/render_diagram.py` eine neue
+1. In `skills/arc42ify/scripts/render_diagram.py` eine neue
    `render_<kind>(spec, theme)`-Funktion nach dem Muster der bestehenden
    drei (`render_boxes`, `render_layers`, `render_sequence`) hinzufügen und
    in `RENDERERS` registrieren. Sie zeichnet ihren Inhalt ab `(0, 0)` und
@@ -18,16 +18,21 @@ erhalten, sind am willkommensten.
    sonst bricht das Corporate-Design-Override.
 3. Alle Koordinaten durch `snap()` schicken (4px-Raster ist nicht
    verhandelbar, siehe `references/style-guide.md`).
-4. Eine Beispiel-Spec unter `skills/arc42-docs/assets/templates/` ablegen
-   und mit `scripts/self_check.py` prüfen.
-5. Den neuen `kind` in `references/diagram-spec.md` dokumentieren
+4. Eine Beispiel-Spec unter `skills/arc42ify/assets/templates/` ablegen,
+   das SVG daneben rendern und mit einchecken — die Tests vergleichen es
+   Byte für Byte mit einem frischen Render.
+5. Jede neue Prüfregel in `self_check.py` bekommt eine kaputte Fixture unter
+   `tests/fixtures/fail/`, die sie auslösen muss, plus die erwartete Meldung
+   in `CheckerCatchesDefects.EXPECTED`. Eine Regel, die nur im Text steht,
+   liefert irgendwann kaputte Diagramme aus.
+6. Den neuen `kind` in `references/diagram-spec.md` dokumentieren
    (Feldreferenz + Beispiel-JSON).
-6. Falls der Typ einem arc42-Kapitel zugeordnet ist: Eintrag in
+7. Falls der Typ einem arc42-Kapitel zugeordnet ist: Eintrag in
    `references/arc42-sections.md` ergänzen.
 
 ## Ein arc42-Kapitel anpassen (Reihenfolge, Wortlaut, Quelle)
 
-Nur `skills/arc42-docs/references/arc42-sections.md` und ggf.
+Nur `skills/arc42ify/references/arc42-sections.md` und ggf.
 `scripts/scaffold.py` (Dateinamen/Titel) anfassen. Keine Kapitel entfernen —
 arc42 definiert alle 12 verbindlich; ein Kapitel darf leer/TODO bleiben,
 aber nicht fehlen.
@@ -35,16 +40,28 @@ aber nicht fehlen.
 ## Vor jedem PR
 
 ```bash
-# Alle Beispiel-Specs müssen weiterhin sauber rendern und den Selbstcheck bestehen
-for f in skills/arc42-docs/assets/templates/*.json; do
-  out=$(mktemp --suffix=.svg)
-  python3 skills/arc42-docs/scripts/render_diagram.py "$f" "$out" || exit 1
-  python3 skills/arc42-docs/scripts/self_check.py "$f" "$out" || exit 1
-done
+python3 -m unittest discover -s tests -v
 ```
 
-Dasselbe läuft automatisch in CI (`.github/workflows/ci.yml`) — ein
-fehlschlagender Check blockiert den Merge.
+Nur Standardbibliothek, keine Installation nötig. Die Tests prüfen:
+
+- alle Beispiel-Diagramme (Vorlagen und `docs-example/`) bestehen den
+  Selbstcheck, und jedes eingecheckte SVG ist identisch mit einem frischen
+  Render — ein veraltetes SVG nennt den Befehl zum Neu-Rendern;
+- der Router: Kanten rechtwinklig, mit Abstand zu fremden Boxen, jedes
+  Kantenende an einem eigenen Anschlusspunkt, alle Formen im 4px-Raster;
+- der Selbstcheck in beide Richtungen: `tests/fixtures/fail/` muss jeweils
+  die erwartete Meldung liefern, `tests/fixtures/pass/` muss sauber sein;
+- `scaffold.py`, die Scripts als Kommandozeilen-Tools (auch auf einer
+  Windows-Konsole, die nicht jedes Zeichen darstellen kann);
+- die `description` in `SKILL.md` (Längengrenze, gültiges YAML, die
+  Trigger-Wörter, an denen Agenten den Skill erkennen), die Plugin-Manifeste
+  (Claude Code, Codex) auf gleichen Namen und gleiche Version, und alle
+  relativen Links in den Markdown-Dateien.
+
+Dasselbe läuft in CI (`.github/workflows/ci.yml`) bei jedem Push und Pull
+Request — auf Python 3.8 (der zugesagten Mindestversion), 3.13 und unter
+Windows.
 
 ## Stil
 

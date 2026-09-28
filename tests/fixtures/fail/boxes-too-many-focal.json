@@ -1,0 +1,27 @@
+{
+  "kind": "boxes",
+  "nodes": [
+    {
+      "id": "a",
+      "label": "A",
+      "col": 0,
+      "row": 0,
+      "kind": "focal"
+    },
+    {
+      "id": "b",
+      "label": "B",
+      "col": 1,
+      "row": 0,
+      "kind": "focal"
+    },
+    {
+      "id": "c",
+      "label": "C",
+      "col": 2,
+      "row": 0,
+      "kind": "focal"
+    }
+  ],
+  "edges": []
+}

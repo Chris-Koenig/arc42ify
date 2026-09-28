@@ -1,11 +1,11 @@
 ---
-name: arc42-docs
-description: Erzeugt oder aktualisiert arc42-Softwarearchitektur-Dokumentation aus einem Repo, einer Idee oder losen Texten — als Markdown + editorial-gestaltete SVG-Diagramme, ablagefähig direkt im GitHub-Repo unter docs/arc42/. Nutzen bei "erstelle die Architekturdoku", "arc42", "dokumentiere die Architektur", "Doku für dieses Repo", oder wenn Code/Ideen in eine strukturierte, visuelle Doku überführt werden sollen.
+name: arc42ify
+description: Erzeugt oder aktualisiert arc42-Softwarearchitektur-Dokumentation (alle 12 Kapitel) aus einem Repo, einer Idee oder losen Texten — als Markdown + editorial-gestaltete SVG-Diagramme (Kontextabgrenzung, Bausteinsicht, Laufzeitsicht, Verteilungssicht, Schichten), ablagefähig direkt im Repo unter docs/arc42/. Creates or updates arc42 software architecture documentation from a codebase, an idea or notes — context view, building block view, runtime view, deployment view, cross-cutting concepts, architecture decisions, quality requirements, risks and technical debt, glossary. Nutzen bei "erstelle die Architekturdoku", "arc42", "dokumentiere die Architektur", "Doku für dieses Repo", "aktualisiere Kapitel 5 nach dem Merge", "document the architecture", "architecture documentation for this repo", "update the architecture docs after this change", oder wenn Code/Ideen in eine strukturierte, visuelle Architektur-Doku überführt werden sollen.
 license: MIT
 compatibility: Braucht Python 3.8+ (nur Standardbibliothek) und einen Agenten mit Terminal-Zugriff, z. B. Claude Code, GitHub Copilot oder OpenAI Codex. Kein Netzwerkzugriff nötig.
 ---
 
-# arc42-docs
+# arc42ify
 
 Verwandelt Code, eine Produktidee oder verstreute Notizen in eine vollständige
 [arc42](https://arc42.de/)-Dokumentation: 12 Kapitel als Markdown, mit
@@ -34,8 +34,8 @@ Ordner, in dem diese `SKILL.md` liegt:
 
 - **Claude Code:** `${CLAUDE_SKILL_DIR}`.
 - **GitHub Copilot, OpenAI Codex, andere:** der Pfad, aus dem diese Datei
-  geladen wurde, z. B. `.claude/skills/arc42-docs`, `.agents/skills/arc42-docs`,
-  `.github/skills/arc42-docs` oder `~/.agents/skills/arc42-docs`.
+  geladen wurde, z. B. `.claude/skills/arc42ify`, `.agents/skills/arc42ify`,
+  `.github/skills/arc42ify` oder `~/.agents/skills/arc42ify`.
 
 Alle Befehle unten laufen **im Root des Ziel-Repos** und rufen die Scripts
 über `"$SKILL_DIR/scripts/…"` auf. Wenn `python3` fehlt (typisch unter

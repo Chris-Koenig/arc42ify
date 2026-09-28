@@ -1,0 +1,29 @@
+{
+  "name": "arc42ify",
+  "version": "1.0.0",
+  "description": "Erzeugt und aktualisiert arc42-Architekturdokumentation (12 Kapitel, editoriale SVG-Diagramme) aus Code, Ideen oder Texten — als Markdown + SVG direkt im Repo unter docs/arc42/.",
+  "author": {
+    "name": "Christoph König",
+    "url": "https://github.com/Chris-Koenig"
+  },
+  "homepage": "https://github.com/Chris-Koenig/arc42ify",
+  "repository": "https://github.com/Chris-Koenig/arc42ify",
+  "license": "MIT",
+  "keywords": ["arc42", "architecture", "documentation", "diagrams", "agent-skills"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "arc42ify",
+    "shortDescription": "arc42-Architekturdoku mit editorialen SVG-Diagrammen, direkt im Repo.",
+    "longDescription": "Erzeugt oder aktualisiert alle 12 arc42-Kapitel aus einem Repo, einer Idee oder losen Notizen — als Markdown mit editorialen SVG-Diagrammen für Kontextabgrenzung, Bausteinsicht, Laufzeitsicht, Verteilungssicht und Schichten. Creates or updates arc42 architecture documentation from a codebase, an idea or notes. Python 3.8+ (standard library only), no network access.",
+    "developerName": "Christoph König",
+    "category": "Productivity",
+    "capabilities": ["Read", "Write"],
+    "websiteURL": "https://github.com/Chris-Koenig/arc42ify",
+    "defaultPrompt": [
+      "Erstelle eine arc42-Doku für dieses Repo.",
+      "Aktualisiere Kapitel 5 und 7 nach dem letzten Merge.",
+      "Document this repo's architecture with arc42."
+    ],
+    "brandColor": "#d9622b"
+  }
+}

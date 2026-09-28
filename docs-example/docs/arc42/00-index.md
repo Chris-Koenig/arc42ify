@@ -2,7 +2,7 @@
 
 > **Fiktives Beispiel.** Die Rösterei Bohnenwerk, ihr Shop und alle Zahlen
 > sind erfunden. Diese Dokumentation zeigt, wie eine mit dem
-> `arc42-docs`-Skill erzeugte Doku aussieht: 12 Kapitel, Diagramme nur dort,
+> `arc42ify`-Skill erzeugte Doku aussieht: 12 Kapitel, Diagramme nur dort,
 > wo sie mehr sagen als ein Satz.
 
 Diese Dokumentation folgt [arc42](https://arc42.de/). Diagramme liegen als

@@ -1,0 +1,23 @@
+{
+  "kind": "layers",
+  "layers": [
+    {
+      "label": "Presentation",
+      "items": [
+        "React SPA"
+      ]
+    },
+    {
+      "label": "Everything",
+      "items": [
+        "keyword number 1 with padding",
+        "keyword number 2 with padding",
+        "keyword number 3 with padding",
+        "keyword number 4 with padding",
+        "keyword number 5 with padding",
+        "keyword number 6 with padding",
+        "keyword number 7 with padding"
+      ]
+    }
+  ]
+}

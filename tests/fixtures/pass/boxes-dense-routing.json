@@ -1,0 +1,111 @@
+{
+  "kind": "boxes",
+  "title": "Dense routing",
+  "subtitle": "skips, diagonals, fan-in, back-edges",
+  "nodes": [
+    {
+      "id": "a",
+      "label": "Gateway",
+      "col": 0,
+      "row": 0
+    },
+    {
+      "id": "b",
+      "label": "Orders",
+      "kind": "focal",
+      "col": 1,
+      "row": 0
+    },
+    {
+      "id": "c",
+      "label": "Billing",
+      "col": 2,
+      "row": 0
+    },
+    {
+      "id": "d",
+      "label": "Queue",
+      "col": 0,
+      "row": 1
+    },
+    {
+      "id": "e",
+      "label": "Worker",
+      "col": 1,
+      "row": 1
+    },
+    {
+      "id": "f",
+      "label": "Mailer",
+      "col": 2,
+      "row": 1
+    },
+    {
+      "id": "g",
+      "label": "DB",
+      "kind": "external",
+      "col": 0,
+      "row": 2
+    },
+    {
+      "id": "h",
+      "label": "S3",
+      "kind": "external",
+      "col": 2,
+      "row": 2
+    }
+  ],
+  "edges": [
+    {
+      "from": "a",
+      "to": "c",
+      "label": "skip row"
+    },
+    {
+      "from": "a",
+      "to": "g",
+      "label": "skip col"
+    },
+    {
+      "from": "a",
+      "to": "f",
+      "label": "diag 2x1"
+    },
+    {
+      "from": "b",
+      "to": "h",
+      "label": "diag 1x2"
+    },
+    {
+      "from": "e",
+      "to": "b",
+      "label": "back"
+    },
+    {
+      "from": "b",
+      "to": "e",
+      "label": "forth"
+    },
+    {
+      "from": "d",
+      "to": "e"
+    },
+    {
+      "from": "f",
+      "to": "e",
+      "label": "fan-in"
+    },
+    {
+      "from": "h",
+      "to": "e",
+      "label": "fan-in 2",
+      "kind": "focal"
+    },
+    {
+      "from": "g",
+      "to": "h",
+      "label": "long skip",
+      "style": "dashed"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "name": "arc42ify",
+  "interface": {
+    "displayName": "arc42ify"
+  },
+  "plugins": [
+    {
+      "name": "arc42ify",
+      "source": {
+        "source": "local",
+        "path": "./"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

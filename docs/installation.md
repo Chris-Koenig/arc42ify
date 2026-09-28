@@ -1,6 +1,6 @@
 # Installation
 
-`arc42-docs` ist ein Agent-Skill im offenen
+`arc42ify` ist ein Agent-Skill im offenen
 [Agent-Skills-Format](https://agentskills.io/specification). Er läuft in
 **Claude Code**, **GitHub Copilot** und **OpenAI Codex** — ohne Anpassung,
 nur der Ablageort unterscheidet sich.
@@ -37,7 +37,7 @@ und probiert die Varianten durch.
 |---|---|
 | … den Skill in **Claude Code** für alle deine Projekte | [Claude-Code-Plugin](#a-als-plugin-empfohlen) |
 | … den Skill in der **Copilot CLI** für alle deine Projekte | [Copilot-CLI-Plugin](#a-als-plugin-copilot-cli) |
-| … den Skill in **Codex** für alle deine Projekte | [persönlicher Skill-Ordner](#a-persönlich-alle-projekte) |
+| … den Skill in **Codex** für alle deine Projekte | [Codex-Plugin](#a-als-plugin-codex-cli) |
 | … dass **das ganze Team** den Skill in einem Repo hat, egal mit welchem Agenten | [Ein Repo für alle drei Hosts](#ein-repo-für-alle-drei-hosts) |
 | … den Skill im **Copilot-Cloud-Agenten** auf GitHub | [Im Repo ablegen](#b-im-repo-vs-code-cli-cloud-agent) |
 
@@ -59,7 +59,7 @@ Dieses Repo ist zugleich Plugin und Marketplace. In einer Claude-Code-Session:
 
 ```text
 /plugin marketplace add Chris-Koenig/arc42ify
-/plugin install arc42-docs@arc42ify
+/plugin install arc42ify@arc42ify
 ```
 
 Oder direkt im Terminal:
@@ -69,11 +69,11 @@ claude plugin marketplace add Chris-Koenig/arc42ify
 ```
 
 ```bash
-claude plugin install arc42-docs@arc42ify
+claude plugin install arc42ify@arc42ify
 ```
 
-Als Plugin heißt der Befehl `/arc42-docs:arc42-docs`; solange kein anderer
-Skill `arc42-docs` heißt, reicht auch `/arc42-docs`.
+Als Plugin heißt der Befehl `/arc42ify:arc42ify`; solange kein anderer
+Skill `arc42ify` heißt, reicht auch `/arc42ify`.
 
 ### B) Persönlich, ohne Plugin
 
@@ -81,7 +81,7 @@ Für alle Projekte auf deinem Rechner:
 
 ```bash
 mkdir -p ~/.claude/skills
-cp -R ARC42IFY/skills/arc42-docs ~/.claude/skills/arc42-docs
+cp -R ARC42IFY/skills/arc42ify ~/.claude/skills/arc42ify
 ```
 
 ### C) Im Projekt
@@ -90,12 +90,12 @@ Für ein einzelnes Repo, mit eingecheckt — dann haben alle im Team den Skill:
 
 ```bash
 mkdir -p .claude/skills
-cp -R ARC42IFY/skills/arc42-docs .claude/skills/arc42-docs
+cp -R ARC42IFY/skills/arc42ify .claude/skills/arc42ify
 ```
 
 ### Prüfen
 
-Neue Session starten und `/` tippen — `arc42-docs` steht in der Liste.
+Neue Session starten und `/` tippen — `arc42ify` steht in der Liste.
 Beim Plugin zusätzlich:
 
 ```bash
@@ -112,21 +112,19 @@ Einstellung ist dafür nicht nötig.
 
 ### A) Als Plugin (Copilot CLI)
 
-Direkt aus diesem Repo:
-
-```bash
-copilot plugin install Chris-Koenig/arc42ify
-```
-
-Oder über den Marketplace:
+Über den Marketplace dieses Repos:
 
 ```bash
 copilot plugin marketplace add Chris-Koenig/arc42ify
 ```
 
 ```bash
-copilot plugin install arc42-docs@arc42ify
+copilot plugin install arc42ify@arc42ify
 ```
+
+Der kürzere Weg `copilot plugin install Chris-Koenig/arc42ify` funktioniert
+noch, ist laut Copilot CLI aber veraltet — künftig werden nur noch
+`plugin@marketplace`-Installationen unterstützt.
 
 ### B) Im Repo (VS Code, CLI, Cloud-Agent)
 
@@ -135,7 +133,7 @@ Copilot sucht Projekt-Skills in `.github/skills/`, `.claude/skills/` und
 
 ```bash
 mkdir -p .github/skills
-cp -R ARC42IFY/skills/arc42-docs .github/skills/arc42-docs
+cp -R ARC42IFY/skills/arc42ify .github/skills/arc42ify
 ```
 
 Einchecken — dann steht der Skill auch dem Copilot-Cloud-Agenten zur
@@ -149,7 +147,7 @@ Für alle Projekte auf deinem Rechner:
 
 ```bash
 mkdir -p ~/.copilot/skills
-cp -R ARC42IFY/skills/arc42-docs ~/.copilot/skills/arc42-docs
+cp -R ARC42IFY/skills/arc42ify ~/.copilot/skills/arc42ify
 ```
 
 `~/.agents/skills/` funktioniert ebenfalls und wird auch von Codex gelesen.
@@ -160,8 +158,8 @@ cp -R ARC42IFY/skills/arc42-docs ~/.copilot/skills/arc42-docs
 copilot skill list
 ```
 
-`arc42-docs` steht unter „Project skills“, „Personal skills“ oder „Plugin
-skills“. In VS Code: im Chat den Agent-Modus wählen und `/arc42-docs` tippen.
+`arc42ify` steht unter „Project skills“, „Personal skills“ oder „Plugin
+skills“. In VS Code: im Chat den Agent-Modus wählen und `/arc42ify` tippen.
 
 ---
 
@@ -170,27 +168,44 @@ skills“. In VS Code: im Chat den Agent-Modus wählen und `/arc42-docs` tippen.
 Codex liest Skills in der **Codex CLI** und der **IDE-Extension**. Kein
 Feature-Flag nötig.
 
-### A) Persönlich (alle Projekte)
+### A) Als Plugin (Codex CLI)
+
+Das Repo bringt einen eigenen Codex-Marketplace mit (`.agents/plugins/`,
+`.codex-plugin/`), der denselben Skill-Ordner installiert:
+
+```bash
+codex plugin marketplace add Chris-Koenig/arc42ify
+```
+
+```bash
+codex plugin add arc42ify@arc42ify
+```
+
+Codex lädt eingetragene Git-Marketplaces beim Start neu. Eine neue Version
+sofort holen: `codex plugin marketplace upgrade arc42ify`, dann eine neue
+Session starten.
+
+### B) Persönlich (alle Projekte)
 
 ```bash
 mkdir -p ~/.agents/skills
-cp -R ARC42IFY/skills/arc42-docs ~/.agents/skills/arc42-docs
+cp -R ARC42IFY/skills/arc42ify ~/.agents/skills/arc42ify
 ```
 
-### B) Im Repo
+### C) Im Repo
 
 Codex sucht in `.agents/skills/` im aktuellen Ordner und in allen
 übergeordneten Ordnern bis zum Repo-Root:
 
 ```bash
 mkdir -p .agents/skills
-cp -R ARC42IFY/skills/arc42-docs .agents/skills/arc42-docs
+cp -R ARC42IFY/skills/arc42ify .agents/skills/arc42ify
 ```
 
 ### Prüfen
 
-In der Codex CLI `/skills` eingeben — `arc42-docs` steht in der Liste.
-Aufrufen lässt er sich mit `$arc42-docs`.
+In der Codex CLI `/skills` eingeben — `arc42ify` steht in der Liste.
+Aufrufen lässt er sich mit `$arc42ify`.
 
 ---
 
@@ -201,27 +216,28 @@ unter `.claude/skills/` ablegen und für Codex verlinken.
 
 ```bash
 mkdir -p .claude/skills .agents/skills
-cp -R ARC42IFY/skills/arc42-docs .claude/skills/arc42-docs
-ln -s ../../.claude/skills/arc42-docs .agents/skills/arc42-docs
+cp -R ARC42IFY/skills/arc42ify .claude/skills/arc42ify
+ln -s ../../.claude/skills/arc42ify .agents/skills/arc42ify
 git add .claude/skills .agents/skills
 ```
 
 | Host | liest | Ergebnis |
 |---|---|---|
-| Claude Code | `.claude/skills/arc42-docs` | direkt |
+| Claude Code | `.claude/skills/arc42ify` | direkt |
 | GitHub Copilot | `.claude/skills/` und `.agents/skills/` | findet ihn an beiden Stellen, listet ihn einmal |
-| OpenAI Codex | `.agents/skills/arc42-docs` | folgt dem Symlink |
+| OpenAI Codex | `.agents/skills/arc42ify` | folgt dem Symlink |
 
 Unter Windows ohne Symlinks (`core.symlinks=false`) statt `ln -s` eine zweite
-Kopie nach `.agents/skills/arc42-docs` legen und beide beim Aktualisieren
+Kopie nach `.agents/skills/arc42ify` legen und beide beim Aktualisieren
 gemeinsam ersetzen.
 
 ## Aktualisieren und entfernen
 
 | Installiert als | Aktualisieren | Entfernen |
 |---|---|---|
-| Claude-Code-Plugin | `claude plugin marketplace update arc42ify`, dann `claude plugin update arc42-docs@arc42ify` | `claude plugin uninstall arc42-docs@arc42ify` |
-| Copilot-CLI-Plugin | `copilot plugin update arc42-docs` (bzw. `arc42-docs@arc42ify`) | `copilot plugin uninstall arc42-docs` |
+| Claude-Code-Plugin | `claude plugin marketplace update arc42ify`, dann `claude plugin update arc42ify@arc42ify` | `claude plugin uninstall arc42ify@arc42ify` |
+| Copilot-CLI-Plugin | `copilot plugin update arc42ify@arc42ify` | `copilot plugin uninstall arc42ify@arc42ify` |
+| Codex-Plugin | `codex plugin marketplace upgrade arc42ify`, dann neue Session | siehe `codex plugin --help` |
 | Kopierter Ordner | `git -C ARC42IFY pull`, dann den Ordner erneut kopieren | Ordner löschen |
 
 Die erzeugte Doku in `docs/arc42/` gehört deinem Projekt und bleibt beim
@@ -231,9 +247,9 @@ Entfernen des Skills unberührt.
 
 | Symptom | Ursache und Lösung |
 |---|---|
-| Der Skill taucht nicht auf. | Der Ordner muss exakt `arc42-docs` heißen und `SKILL.md` direkt enthalten (nicht `arc42-docs/arc42-docs/SKILL.md`). Danach eine neue Session starten; in der Copilot CLI reicht `/skills reload`. |
+| Der Skill taucht nicht auf. | Der Ordner muss exakt `arc42ify` heißen und `SKILL.md` direkt enthalten (nicht `arc42ify/arc42ify/SKILL.md`). Danach eine neue Session starten; in der Copilot CLI reicht `/skills reload`. |
 | Der Agent schreibt Text, aber keine SVGs. | Er hat keinen Terminal-Zugriff oder darf keine Befehle ausführen. Terminal-Tool freigeben bzw. Befehle erlauben. |
 | `python3: command not found` | Python installieren oder unter Windows `py -3` nutzen. Der Skill braucht keine Pakete. |
-| `No such file …/scripts/render_diagram.py` | Der Agent hat die Scripts im Ziel-Repo statt im Skill-Ordner gesucht. Ihn auf den Skill-Pfad hinweisen (z. B. `.claude/skills/arc42-docs/scripts/`). |
+| `No such file …/scripts/render_diagram.py` | Der Agent hat die Scripts im Ziel-Repo statt im Skill-Ordner gesucht. Ihn auf den Skill-Pfad hinweisen (z. B. `.claude/skills/arc42ify/scripts/`). |
 | `self_check.py` meldet `FAIL`. | Gewollt: Der Check findet kollidierende Kanten, zu lange Labels oder zu viele Akzente. Der Agent korrigiert die Spec und rendert neu — siehe [Nutzung](usage.md#diagramme-prüfen). |
 | Copilot fragt bei jedem Script nach Erlaubnis. | Für `python3` eine dauerhafte Freigabe erteilen. Die Scripts greifen nicht aufs Netz zu und schreiben nur die Dateien, die ihnen als Ziel übergeben werden. |

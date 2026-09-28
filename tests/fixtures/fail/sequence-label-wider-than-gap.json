@@ -1,0 +1,29 @@
+{
+  "kind": "sequence",
+  "lanes": [
+    {
+      "id": "a",
+      "label": "A"
+    },
+    {
+      "id": "b",
+      "label": "B"
+    },
+    {
+      "id": "c",
+      "label": "C"
+    }
+  ],
+  "messages": [
+    {
+      "from": "a",
+      "to": "b",
+      "label": "a message label that is far too long for one gap"
+    },
+    {
+      "from": "b",
+      "to": "a",
+      "label": "ok"
+    }
+  ]
+}

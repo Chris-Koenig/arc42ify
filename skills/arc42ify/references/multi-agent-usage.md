@@ -13,9 +13,9 @@ Die ausführliche Anleitung für Menschen steht im Skill-Repo unter
 
 | Host | Projekt (im Repo) | Persönlich (alle Repos) | Aufruf |
 |---|---|---|---|
-| Claude Code | `.claude/skills/arc42-docs/` | `~/.claude/skills/arc42-docs/` | automatisch oder `/arc42-docs` (als Plugin: `/arc42-docs:arc42-docs`) |
-| GitHub Copilot (CLI, VS Code, Cloud-Agent) | `.github/skills/`, `.claude/skills/` oder `.agents/skills/` | `~/.copilot/skills/` oder `~/.agents/skills/` | automatisch oder `/arc42-docs` |
-| OpenAI Codex (CLI, IDE-Extension) | `.agents/skills/arc42-docs/` | `~/.agents/skills/arc42-docs/` | automatisch oder `$arc42-docs`; `/skills` listet alle |
+| Claude Code | `.claude/skills/arc42ify/` | `~/.claude/skills/arc42ify/` | automatisch oder `/arc42ify` (als Plugin: `/arc42ify:arc42ify`) |
+| GitHub Copilot (CLI, VS Code, Cloud-Agent) | `.github/skills/`, `.claude/skills/` oder `.agents/skills/` | `~/.copilot/skills/` oder `~/.agents/skills/` | automatisch oder `/arc42ify` |
+| OpenAI Codex (CLI, IDE-Extension) | `.agents/skills/arc42ify/` | `~/.agents/skills/arc42ify/` | automatisch oder `$arc42ify`; `/skills` listet alle |
 
 Kein Host braucht dafür eine Einstellung oder ein Feature-Flag.
 
@@ -25,8 +25,8 @@ Den Skill-Ordner **einmal** echt ins Repo legen und für Codex verlinken:
 
 ```bash
 mkdir -p .claude/skills .agents/skills
-cp -R /pfad/zu/arc42ify/skills/arc42-docs .claude/skills/arc42-docs
-ln -s ../../.claude/skills/arc42-docs .agents/skills/arc42-docs
+cp -R /pfad/zu/arc42ify/skills/arc42ify .claude/skills/arc42ify
+ln -s ../../.claude/skills/arc42ify .agents/skills/arc42ify
 ```
 
 - Claude Code und Copilot lesen `.claude/skills/` direkt.
@@ -34,19 +34,26 @@ ln -s ../../.claude/skills/arc42-docs .agents/skills/arc42-docs
 - Copilot findet den Skill an beiden Stellen, listet ihn aber nur einmal.
 
 Unter Windows ohne Symlink-Unterstützung (`git config core.symlinks false`)
-statt des Symlinks eine zweite Kopie nach `.agents/skills/arc42-docs` legen.
+statt des Symlinks eine zweite Kopie nach `.agents/skills/arc42ify` legen.
 
-## Als Plugin (Claude Code, Copilot CLI)
+## Als Plugin (Claude Code, Copilot CLI, Codex)
 
-Das Skill-Repo ist zugleich Plugin und Marketplace (`.claude-plugin/`):
+Das Skill-Repo ist zugleich Plugin und Marketplace (`.claude-plugin/` für
+Claude Code und Copilot, `.codex-plugin/` + `.agents/plugins/` für Codex —
+alle installieren denselben Ordner `skills/arc42ify/`):
 
 ```bash
 # Claude Code (in der Session) — oder als Shell-Befehl: claude plugin …
 /plugin marketplace add Chris-Koenig/arc42ify
-/plugin install arc42-docs@arc42ify
+/plugin install arc42ify@arc42ify
 
 # GitHub Copilot CLI
-copilot plugin install Chris-Koenig/arc42ify
+copilot plugin marketplace add Chris-Koenig/arc42ify
+copilot plugin install arc42ify@arc42ify
+
+# OpenAI Codex CLI
+codex plugin marketplace add Chris-Koenig/arc42ify
+codex plugin add arc42ify@arc42ify
 ```
 
 ## Voraussetzungen für die Diagramme

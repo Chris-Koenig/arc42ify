@@ -1,0 +1,77 @@
+{
+  "kind": "boxes",
+  "title": "Edge around a box",
+  "subtitle": "app -> db must route around cache",
+  "groups": [
+    {
+      "id": "cloud",
+      "label": "Azure — Resource Group prod",
+      "nodes": [
+        "app",
+        "db",
+        "cache"
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "id": "cdn",
+      "label": "CDN",
+      "kind": "external",
+      "col": 0,
+      "row": 0
+    },
+    {
+      "id": "app",
+      "label": "App Service",
+      "sublabel": "Docker · 2 Instanzen",
+      "kind": "focal",
+      "col": 1,
+      "row": 0
+    },
+    {
+      "id": "cache",
+      "label": "Redis Cache",
+      "sublabel": "Standard C1",
+      "col": 1,
+      "row": 1
+    },
+    {
+      "id": "db",
+      "label": "PostgreSQL Flexible",
+      "sublabel": "16 vCores",
+      "col": 1,
+      "row": 2
+    },
+    {
+      "id": "monitor",
+      "label": "App Insights",
+      "kind": "external",
+      "col": 2,
+      "row": 0
+    }
+  ],
+  "edges": [
+    {
+      "from": "cdn",
+      "to": "app",
+      "label": "HTTPS"
+    },
+    {
+      "from": "app",
+      "to": "cache",
+      "label": "TCP 6379"
+    },
+    {
+      "from": "app",
+      "to": "db",
+      "label": "TCP 5432"
+    },
+    {
+      "from": "app",
+      "to": "monitor",
+      "label": "Telemetrie",
+      "style": "dashed"
+    }
+  ]
+}

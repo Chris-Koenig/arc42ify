@@ -1,0 +1,29 @@
+{
+  "kind": "sequence",
+  "lanes": [
+    {
+      "id": "a",
+      "label": "A"
+    },
+    {
+      "id": "b",
+      "label": "B"
+    },
+    {
+      "id": "c",
+      "label": "C"
+    }
+  ],
+  "messages": [
+    {
+      "from": "a",
+      "to": "a",
+      "label": "self-call label that runs into the next lane"
+    },
+    {
+      "from": "a",
+      "to": "b",
+      "label": "ok"
+    }
+  ]
+}

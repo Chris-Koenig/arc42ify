@@ -1,0 +1,38 @@
+{
+  "kind": "sequence",
+  "title": "Self-call and numbering",
+  "numbered": true,
+  "lanes": [
+    {
+      "id": "a",
+      "label": "Browser"
+    },
+    {
+      "id": "b",
+      "label": "Shop"
+    },
+    {
+      "id": "c",
+      "label": "Payment"
+    }
+  ],
+  "messages": [
+    {
+      "from": "a",
+      "to": "c",
+      "label": "spans two lanes"
+    },
+    {
+      "from": "b",
+      "to": "b",
+      "label": "self-call"
+    },
+    {
+      "from": "c",
+      "to": "a",
+      "label": "reply",
+      "dashed": true,
+      "kind": "focal"
+    }
+  ]
+}

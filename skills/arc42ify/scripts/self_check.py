@@ -217,6 +217,14 @@ GEOMETRY_CHECKS = {
 }
 
 
+def check(spec):
+    """All spec and geometry problems of one diagram spec."""
+    problems = check_spec(spec)
+    if can_lay_out(spec, problems):
+        problems += GEOMETRY_CHECKS[spec["kind"]](spec)
+    return problems
+
+
 def check_svg(svg_text):
     problems = []
     if "<svg" not in svg_text:
@@ -236,6 +244,9 @@ def check_svg(svg_text):
 
 
 def main():
+    if hasattr(sys.stdout, "reconfigure"):
+        # labels are user text; never crash on a console that cannot print them
+        sys.stdout.reconfigure(errors="replace")
     if len(sys.argv) < 2:
         print(__doc__)
         raise SystemExit(1)
@@ -244,9 +255,7 @@ def main():
     with open(spec_path, "r", encoding="utf-8") as f:
         spec = json.load(f)
 
-    problems = check_spec(spec)
-    if can_lay_out(spec, problems):
-        problems += GEOMETRY_CHECKS[spec["kind"]](spec)
+    problems = check(spec)
 
     if len(sys.argv) > 2:
         with open(sys.argv[2], "r", encoding="utf-8") as f:

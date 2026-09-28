@@ -3,7 +3,7 @@
 > **Fiktiv.** Die Rösterei Bohnenwerk, ihr Shop, alle Zahlen und Entscheidungen
 > sind für dieses Beispiel erfunden.
 
-So sieht eine Architekturdoku aus, die mit dem `arc42-docs`-Skill entsteht.
+So sieht eine Architekturdoku aus, die mit dem `arc42ify`-Skill entsteht.
 Der Ordner hat dieselbe Struktur, die der Skill in deinem Repo anlegt:
 `docs/arc42/` mit 13 Markdown-Dateien und `assets/diagrams/` mit je einer
 `.diagram.json` (Quelle) und einem `.svg` (erzeugt).
@@ -33,7 +33,7 @@ Aus dem Root dieses Repos:
 ```bash
 for spec in docs-example/docs/arc42/assets/diagrams/*.diagram.json; do
   svg="${spec%.diagram.json}.svg"
-  python3 skills/arc42-docs/scripts/render_diagram.py "$spec" "$svg"
-  python3 skills/arc42-docs/scripts/self_check.py "$spec" "$svg"
+  python3 skills/arc42ify/scripts/render_diagram.py "$spec" "$svg"
+  python3 skills/arc42ify/scripts/self_check.py "$spec" "$svg"
 done
 ```

@@ -1,5 +1,5 @@
 {
-  "name": "arc42-docs",
+  "name": "arc42ify",
   "version": "1.0.0",
   "description": "Erzeugt und aktualisiert arc42-Architekturdokumentation (12 Kapitel, editoriale SVG-Diagramme) aus Code, Ideen oder Texten — als Markdown + SVG direkt im Repo unter docs/arc42/.",
   "author": {

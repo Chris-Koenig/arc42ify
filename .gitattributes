@@ -1,0 +1,3 @@
+# Diagrams are compared byte for byte with a fresh render (tests, CI), and
+# the renderer always writes LF — keep them LF on every OS.
+*.svg text eol=lf

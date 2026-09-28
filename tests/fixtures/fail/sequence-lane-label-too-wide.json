@@ -1,0 +1,25 @@
+{
+  "kind": "sequence",
+  "lanes": [
+    {
+      "id": "a",
+      "label": "A participant with a very long name"
+    },
+    {
+      "id": "b",
+      "label": "B"
+    }
+  ],
+  "messages": [
+    {
+      "from": "a",
+      "to": "b",
+      "label": "x"
+    },
+    {
+      "from": "b",
+      "to": "a",
+      "label": "y"
+    }
+  ]
+}

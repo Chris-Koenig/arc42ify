@@ -23,10 +23,10 @@ Repo“). Du kannst ihn auch ausdrücklich aufrufen:
 
 | Host | Ausdrücklich aufrufen |
 |---|---|
-| Claude Code | `/arc42-docs` (als Plugin installiert: `/arc42-docs:arc42-docs`) |
-| GitHub Copilot — CLI und VS Code Agent-Modus | `/arc42-docs` |
+| Claude Code | `/arc42ify` (als Plugin installiert: `/arc42ify:arc42ify`) |
+| GitHub Copilot — CLI und VS Code Agent-Modus | `/arc42ify` |
 | GitHub Copilot — Cloud-Agent | Issue beschreiben und Copilot zuweisen, z. B. „Erstelle eine arc42-Doku für dieses Repo“ |
-| OpenAI Codex — CLI und IDE | `$arc42-docs` |
+| OpenAI Codex — CLI und IDE | `$arc42ify` |
 
 Starte den Agenten im **Root des Repos**, das dokumentiert werden soll.
 
@@ -35,7 +35,7 @@ Starte den Agenten im **Root des Repos**, das dokumentiert werden soll.
 ### Ein bestehendes Repo dokumentieren
 
 ```text
-/arc42-docs Erstelle eine arc42-Doku für dieses Repo. Zielgruppe sind
+/arc42ify Erstelle eine arc42-Doku für dieses Repo. Zielgruppe sind
 neue Entwickler:innen im Team. Schreib auf Deutsch.
 ```
 
@@ -46,7 +46,7 @@ Qualitätsziele oder Stakeholder —, fragt er nach oder markiert es als offen.
 ### Eine Idee dokumentieren, bevor es Code gibt
 
 ```text
-/arc42-docs Wir bauen einen Terminbuchungs-Service für Arztpraxen.
+/arc42ify Wir bauen einen Terminbuchungs-Service für Arztpraxen.
 Praxen pflegen Zeitfenster, Patient:innen buchen per Web. Anbindung an den
 Praxis-Kalender über CalDAV, SMS-Erinnerungen über einen externen Dienst.
 Python/FastAPI, Hosting in der EU. Leg die Doku unter docs/arc42/ an.
@@ -58,7 +58,7 @@ Kapitel ohne ausreichende Information bleiben als `<!-- TODO -->` markiert
 ### Vorhandene Notizen überführen
 
 ```text
-/arc42-docs Überführe docs/wiki-export/ und das Miro-Board (Screenshot
+/arc42ify Überführe docs/wiki-export/ und das Miro-Board (Screenshot
 anbei) in eine arc42-Doku. Übernimm die Inhalte der vorhandenen Diagramme,
 nicht ihre Optik.
 ```
@@ -66,7 +66,7 @@ nicht ihre Optik.
 ### Nach einer Code-Änderung aktualisieren
 
 ```text
-/arc42-docs Wir haben einen Redis-Cache und einen neuen Worker-Prozess
+/arc42ify Wir haben einen Redis-Cache und einen neuen Worker-Prozess
 eingeführt (siehe letzten Merge). Aktualisiere nur die betroffenen Kapitel.
 ```
 
@@ -77,7 +77,7 @@ unangetastet, damit der Diff im Pull Request lesbar bleibt.
 ### Nur ein Kapitel oder ein Diagramm
 
 ```text
-/arc42-docs Schreib Kapitel 6 (Laufzeitsicht) für den Login-Flow mit
+/arc42ify Schreib Kapitel 6 (Laufzeitsicht) für den Login-Flow mit
 Token-Refresh, mit Sequenzdiagramm.
 ```
 
@@ -142,7 +142,7 @@ Am einfachsten bittest du den Agenten: „Füge im Kontextdiagramm den
 Versanddienstleister hinzu.“ Von Hand geht es so:
 
 ```bash
-python3 .claude/skills/arc42-docs/scripts/render_diagram.py docs/arc42/assets/diagrams/03-kontext.diagram.json docs/arc42/assets/diagrams/03-kontext.svg
+python3 .claude/skills/arc42ify/scripts/render_diagram.py docs/arc42/assets/diagrams/03-kontext.diagram.json docs/arc42/assets/diagrams/03-kontext.svg
 ```
 
 Den Pfad zu `scripts/` an deinen Installationsort anpassen (z. B.
@@ -155,12 +155,12 @@ Den Pfad zu `scripts/` an deinen Installationsort anpassen (z. B.
 | `layers` | Schichten mit Stichworten | 8 (ggf. 4) |
 
 Das vollständige Format steht in
-[`references/diagram-spec.md`](../skills/arc42-docs/references/diagram-spec.md).
+[`references/diagram-spec.md`](../skills/arc42ify/references/diagram-spec.md).
 
 ## Diagramme prüfen
 
 ```bash
-python3 .claude/skills/arc42-docs/scripts/self_check.py docs/arc42/assets/diagrams/03-kontext.diagram.json docs/arc42/assets/diagrams/03-kontext.svg
+python3 .claude/skills/arc42ify/scripts/self_check.py docs/arc42/assets/diagrams/03-kontext.diagram.json docs/arc42/assets/diagrams/03-kontext.svg
 ```
 
 `OK` heißt: Spec gültig, keine Kante läuft durch eine Box, Beschriftungen
@@ -176,7 +176,7 @@ es zwei Wege:
 - **Für ein einzelnes Diagramm:** ein `"theme"`-Feld in der Spec, z. B.
   `"theme": {"accent": "#0b6bcb"}`.
 - **Für alle Diagramme:** die Tokens in
-  [`references/style-guide.md`](../skills/arc42-docs/references/style-guide.md)
+  [`references/style-guide.md`](../skills/arc42ify/references/style-guide.md)
   und `DEFAULT_THEME` in `render_diagram.py` anpassen — am besten in der
   Projektkopie des Skills.
 
@@ -198,7 +198,7 @@ jobs:
         with: { python-version: "3.12" }
       - name: Specs prüfen und SVGs vergleichen
         run: |
-          S=.claude/skills/arc42-docs/scripts
+          S=.claude/skills/arc42ify/scripts
           for spec in docs/arc42/assets/diagrams/*.diagram.json; do
             svg="${spec%.diagram.json}.svg"
             python3 "$S/render_diagram.py" "$spec" /tmp/check.svg

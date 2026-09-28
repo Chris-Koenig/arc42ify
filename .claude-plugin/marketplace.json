@@ -7,7 +7,7 @@
   },
   "plugins": [
     {
-      "name": "arc42-docs",
+      "name": "arc42ify",
       "source": "./",
       "description": "Erzeugt und aktualisiert arc42-Architekturdokumentation (12 Kapitel, editoriale SVG-Diagramme) aus Code, Ideen oder Texten.",
       "version": "1.0.0"

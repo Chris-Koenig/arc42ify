@@ -17,6 +17,7 @@ agent has already filled some chapters in is safe.
 """
 import argparse
 import os
+import sys
 
 CHAPTERS_DE = [
     ("00-index", "arc42-Dokumentation", None),
@@ -51,7 +52,7 @@ CHAPTERS_EN = [
 ]
 
 INDEX_BODY_DE = """> Diese Dokumentation folgt [arc42](https://arc42.de/). Erzeugt und
-> gepflegt mit dem `arc42-docs`-Skill — Diagramme liegen als SVG unter
+> gepflegt mit dem `arc42ify`-Skill — Diagramme liegen als SVG unter
 > `assets/diagrams/` und werden aus `*.diagram.json`-Specs im selben Ordner
 > generiert (`python3 scripts/render_diagram.py <spec>.json <ziel>.svg`,
 > siehe das Skill-Repo für das Script).
@@ -62,7 +63,7 @@ INDEX_BODY_DE = """> Diese Dokumentation folgt [arc42](https://arc42.de/). Erzeu
 """
 
 INDEX_BODY_EN = """> This documentation follows [arc42](https://arc42.org/). Generated and
-> maintained with the `arc42-docs` skill — diagrams live as SVG under
+> maintained with the `arc42ify` skill — diagrams live as SVG under
 > `assets/diagrams/`, generated from `*.diagram.json` specs in the same
 > folder (`python3 scripts/render_diagram.py <spec>.json <target>.svg`, see
 > the skill repo for the script).
@@ -74,7 +75,7 @@ INDEX_BODY_EN = """> This documentation follows [arc42](https://arc42.org/). Gen
 
 CHAPTER_STUB = """<!-- status: draft -->
 
-_TODO: filled in by the arc42-docs agent skill. See
+_TODO: filled in by the arc42ify agent skill. See
 references/arc42-sections.md in the skill for what belongs in this chapter
 and where to find it in this codebase._
 """
@@ -85,12 +86,14 @@ def write_if_missing(path, content):
         print(f"skip (exists): {path}")
         return
     os.makedirs(os.path.dirname(path), exist_ok=True)
-    with open(path, "w", encoding="utf-8") as f:
+    with open(path, "w", encoding="utf-8", newline="\n") as f:
         f.write(content)
     print(f"created: {path}")
 
 
 def main():
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(errors="replace")  # e.g. a cp1252 console on Windows
     ap = argparse.ArgumentParser()
     ap.add_argument("target_repo")
     ap.add_argument("--lang", choices=["de", "en"], default="de")
