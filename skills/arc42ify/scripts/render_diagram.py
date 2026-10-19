@@ -305,7 +305,21 @@ class Router:
             c += CROSS_COST
         return c + self.soft.get(q, 0)
 
-    def route(self, src, dst):
+    def route(self, src, dst, inside=None):
+        """Route src -> dst. With `inside` (a rect), the edge may only use
+        lattice points strictly within it; if that is impossible, it is
+        routed without the restriction."""
+        if inside is not None:
+            x, y, w, h = inside
+            pts = self._route(src, dst, lambda q: x < q[0] < x + w and y < q[1] < y + h)
+            if pts:
+                return pts
+        pts = self._route(src, dst, lambda q: True)
+        if not pts:
+            raise SystemExit(f"could not route edge {src} -> {dst}: no free port left")
+        return pts
+
+    def _route(self, src, dst, allowed):
         heap, best, prev = [], {}, {}
         tie = 0
 
@@ -318,10 +332,12 @@ class Router:
                 heapq.heappush(heap, (cost, tie, key))
 
         for p0, p1, d, pen in self.ports(src):
-            push((p1, d), self._step_cost(p0, p1, d, d) + pen, ("start", p0))
+            if allowed(p1):
+                push((p1, d), self._step_cost(p0, p1, d, d) + pen, ("start", p0))
         goals = {}
         for q0, q1, d, pen in self.ports(dst):
-            goals.setdefault(q1, []).append((q0, (d + 2) % 4, pen))
+            if allowed(q1):
+                goals.setdefault(q1, []).append((q0, (d + 2) % 4, pen))
 
         while heap:
             cost, _, key = heapq.heappop(heap)
@@ -338,10 +354,10 @@ class Router:
                     continue
                 q = (p[0] + dx * STEP, p[1] + dy * STEP)
                 if (q in self.blocked or not self.xmin <= q[0] <= self.xmax
-                        or not self.ymin <= q[1] <= self.ymax):
+                        or not self.ymin <= q[1] <= self.ymax or not allowed(q)):
                     continue
                 push((q, nd), cost + self._step_cost(p, q, d, nd), key)
-        raise SystemExit(f"could not route edge {src} -> {dst}: no free port left")
+        return None
 
     @staticmethod
     def _path(prev, goal_key):
@@ -430,9 +446,14 @@ def layout_boxes(spec):
     taken = list(group_labels)
     borders = [g["rect"] for g in groups if g["kind"] == "box"]
     lines, tips = [], []
+    # An edge between two parts of the same "box" group stays inside it.
+    box_of = {nid: g["rect"] for g in groups if g["kind"] == "box" for nid in g["nodes"]}
     for i in order:
         e = edges[i]
-        pts = router.route(e["from"], e["to"])
+        inside = box_of.get(e["from"])
+        if inside is None or box_of.get(e["to"]) != inside:
+            inside = None
+        pts = router.route(e["from"], e["to"], inside)
         if e.get("dir", "forward") != "none":
             tips.append(arrow_tip_rect(pts[-1]))
         label_rect, label_seg = None, None

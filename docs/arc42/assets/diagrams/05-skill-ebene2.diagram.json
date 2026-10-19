@@ -3,22 +3,31 @@
   "title": "Whitebox Skill — Ebene 2",
   "subtitle": "arc42ify · arc42 Kapitel 5.2",
   "nodes": [
-    {"id": "refs", "label": "references/", "sublabel": "4 × Markdown", "col": 0, "row": 0},
+    {"id": "host", "label": "Agent-Host", "sublabel": "Claude Code u. a.", "kind": "external", "col": 0, "row": 0},
     {"id": "skillmd", "label": "SKILL.md", "sublabel": "Ablauf + Regeln", "kind": "focal", "col": 1, "row": 0},
-    {"id": "templates", "label": "assets/templates/", "sublabel": "6 Beispiel-Specs", "col": 2, "row": 0},
-    {"id": "scaffold", "label": "scaffold.py", "sublabel": "Gerüst docs/arc42/", "col": 0, "row": 1},
-    {"id": "render", "label": "render_diagram.py", "sublabel": "Spec → SVG", "col": 1, "row": 1},
-    {"id": "check", "label": "self_check.py", "sublabel": "Spec + SVG prüfen", "col": 2, "row": 1}
+    {"id": "refs", "label": "references/", "sublabel": "5 × Markdown", "col": 1, "row": 1},
+    {"id": "templates", "label": "assets/templates/", "sublabel": "6 Beispiel-Specs", "col": 1, "row": 2},
+    {"id": "scaffold", "label": "scaffold.py", "sublabel": "Gerüst docs/arc42/", "col": 2, "row": 0},
+    {"id": "render", "label": "render_diagram.py", "sublabel": "Spec → SVG", "col": 2, "row": 1},
+    {"id": "check", "label": "self_check.py", "sublabel": "Spec + SVG prüfen", "col": 2, "row": 2},
+    {"id": "repo", "label": "Ziel-Repo", "sublabel": "docs/arc42/", "kind": "external", "col": 3, "row": 0},
+    {"id": "tests", "label": "Tests", "sublabel": "tests/", "kind": "external", "col": 3, "row": 2}
   ],
   "edges": [
+    {"from": "host", "to": "skillmd", "label": "IF-01 lädt"},
     {"from": "skillmd", "to": "refs", "label": "lädt bei Bedarf"},
     {"from": "skillmd", "to": "templates", "label": "Startpunkte"},
-    {"from": "skillmd", "to": "scaffold", "label": "1 · Gerüst"},
-    {"from": "skillmd", "to": "render", "label": "2 · rendern"},
-    {"from": "skillmd", "to": "check", "label": "3 · prüfen"},
-    {"from": "check", "to": "render", "label": "import layout_*", "kind": "focal"}
+    {"from": "skillmd", "to": "scaffold", "label": "IF-06"},
+    {"from": "skillmd", "to": "render", "label": "IF-03"},
+    {"from": "skillmd", "to": "check", "label": "IF-05"},
+    {"from": "check", "to": "render", "label": "IF-04 layout_*", "kind": "focal"},
+    {"from": "scaffold", "to": "repo", "label": "Markdown"},
+    {"from": "render", "to": "repo", "label": "SVG"},
+    {"from": "tests", "to": "check", "label": "IF-05"},
+    {"from": "tests", "to": "render", "label": "IF-04"}
   ],
   "groups": [
-    {"id": "scripts", "label": "scripts/", "nodes": ["scaffold", "render", "check"]}
+    {"id": "skill", "kind": "box", "label": "Skill", "sublabel": "Ebene 1 · skills/arc42ify/",
+     "nodes": ["skillmd", "refs", "templates", "scaffold", "render", "check"]}
   ]
 }

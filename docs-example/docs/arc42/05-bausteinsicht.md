@@ -55,7 +55,7 @@ stellt sie als Jobs in die Redis-Queue. Details in
 
 **Ablage.** `src/bohnenwerk/bestellungen/service.py`, `status.py`
 
-**Bietet an:** [IF-01](#if-01-bestell-api) · **Nutzt:** [IF-04](#if-04-outbox-schreiben),
+**Bietet an:** [IF-01](#if-01-bestell-api) · **Nutzt:** [IF-04](#53-schnittstellen),
 Tabellen `bestellung`, `bestellposten`
 
 **Qualitätsmerkmale.** Jeder Statusübergang läuft durch den Zustandsautomaten;
@@ -73,7 +73,7 @@ der einzige Weg dorthin ([ADR-003](09-architekturentscheidungen.md#adr-003-zahls
 **Ablage.** `src/bohnenwerk/bestellungen/zahlung.py`
 
 **Bietet an:** [IF-02](#if-02-zahlungsereignis-verarbeiten) · **Nutzt:**
-[IF-04](#if-04-outbox-schreiben), Tabellen `bestellung`, `psp_event`
+[IF-04](#53-schnittstellen), Tabellen `bestellung`, `psp_event`
 
 **Qualitätsmerkmale.** Genau-einmal-Verarbeitung je Event-ID über einen
 Unique-Constraint, nicht über Anwendungslogik.
@@ -85,7 +85,7 @@ auslösende Zustandsänderung gespeichert wurde.
 
 **Ablage.** `src/bohnenwerk/bestellungen/outbox.py`, Tabelle `outbox`
 
-**Bietet an:** [IF-03](#if-03-outbox-events), [IF-04](#if-04-outbox-schreiben)
+**Bietet an:** [IF-03](#if-03-outbox-events), [IF-04](#53-schnittstellen)
 
 **Qualitätsmerkmale.** Kein eigener Commit — Schreiben ohne laufende
 Transaktion des Aufrufers ist ein Programmierfehler.

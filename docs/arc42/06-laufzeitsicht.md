@@ -38,13 +38,17 @@ Ablauf, weil hier die meisten Änderungen landen.
 - **Schritt 5:** `node_rect` setzt jeden Knoten auf `col × CELL_W`,
   `row × CELL_H`; Breite und Höhe werden auf ein Vielfaches von
   `PORT_PITCH` gerundet, damit Seitenmitten und Ports auf dem Gitter liegen.
-  `group_geometry` legt die Gruppenrahmen um ihre Mitglieder.
+  `group_geometry` legt die Gruppenrahmen um ihre Mitglieder; eine
+  `box`-Gruppe bekommt oben Platz für Titel und Sublabel.
 - **Schritt 7 ist die Schleife:** einmal je Kante, direkte Nachbarn zuerst,
   dann nach Abstand. Jede geroutete Kante belegt ihre Ports und Strecken; die
-  nächste Kante zahlt für Kreuzungen und gemeinsame Strecken.
+  nächste Kante zahlt für Kreuzungen und gemeinsame Strecken. Verbindet eine
+  Kante zwei Teile derselben `box`-Gruppe, darf sie die Gruppe nicht
+  verlassen (nur wenn das unmöglich ist, wird sie frei geroutet).
 - **Schritt 9:** `place_label` probiert das längste Kantenstück zuerst,
   jeweils in der Mitte, dann zu den Enden hin. Ein platziertes Label wird
-  für die folgenden Kanten teuer (`NEAR_LABEL_COST`).
+  für die folgenden Kanten teuer (`NEAR_LABEL_COST`). Auf dem Rahmen einer
+  `box`-Gruppe landet nie ein Label.
 - **Schritt 12–13:** `render_svg` gibt jedem Renderer einen Ursprung bei
   (0, 0) und setzt Titel und `MARGIN` einheitlich; `render` schreibt mit LF.
 
@@ -65,7 +69,8 @@ Bewusst ohne Diagramm — der Ablauf ist linear:
    Renderer (`rd.layout_boxes` bzw. `rd.layout_sequence`) und prüft deren
    Ergebnis: überlappende Knoten, Text breiter als seine Box, Kanten durch
    fremde Boxen oder übereinander, Labels auf Boxen, Labels, Kanten oder
-   Pfeilspitzen, Gruppen mit fremden Knoten.
+   Pfeilspitzen, Gruppen mit fremden Knoten; bei `box`-Gruppen zusätzlich
+   unbekannte Gruppen-Art, zu breiter Titel und Labels auf dem Rahmen.
 4. Mit SVG-Argument prüft `check_svg` zusätzlich `<title>`, Schatten und
    externe URLs.
 5. Ausgabe `OK — <spec>` mit Exit-Code 0 oder `FAIL — n issue(s)` mit einer
