@@ -37,6 +37,7 @@ kein Problem).
 | Akzent | `accent` | `#d9622b` | Fokale Knoten/Kanten (max. 1–2×) |
 | Rahmen | `hairline` | `#d8d5cf` | 1px-Rahmen, Gruppen-Grenzen |
 | Extern | `external` | `#e7e5e0` | Knoten außerhalb der eigenen Verantwortung |
+| Container | `container` | `#eeebe5` | Fläche einer `box`-Gruppe (Whitebox eines Bausteins) |
 | Titel-Font | `font_title` | System-Serife | Diagrammtitel |
 | Label-Font | `font_label` | System-Sans | Knoten-/Schicht-Namen |
 | Mono-Font | `font_mono` | System-Mono | Technische Sublabels |

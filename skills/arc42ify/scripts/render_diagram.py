@@ -42,6 +42,7 @@ DEFAULT_THEME = {
     "accent": "#d9622b",
     "hairline": "#d8d5cf",
     "external": "#e7e5e0",
+    "container": "#eeebe5",
     "font_title": "'Iowan Old Style','Palatino Linotype',Georgia,serif",
     "font_label": "-apple-system,'Segoe UI',Inter,Roboto,sans-serif",
     "font_mono": "'SFMono-Regular','Cascadia Mono','Consolas',monospace",
@@ -61,6 +62,7 @@ CELL_W = NODE_W + 168        # column gap fits a ~20-char label between neighbou
 CELL_H = NODE_H + 72         # row gap fits a label with clearance above/below
 GROUP_PAD = 16
 GROUP_PAD_TOP = 32           # room for the group label
+BOX_GROUP_PAD_TOP_SUB = 44   # a "box" group with title and sublabel
 LABEL_H = 16
 LABEL_CLEAR = 4              # min gap between an edge label and a box/label
 
@@ -146,6 +148,15 @@ def segment_hits_rect(p, q, r, clear=0):
     return x < x0 < x + w and y0 < y + h and y1 > y
 
 
+def crosses_border(r, g, clear=0):
+    """True if rect r touches the outline of rect g: it overlaps g (grown by
+    `clear`) without lying fully inside g (shrunk by `clear`)."""
+    gx, gy, gw, gh = g
+    inside = (r[0] >= gx + clear and r[1] >= gy + clear
+              and r[0] + r[2] <= gx + gw - clear and r[1] + r[3] <= gy + gh - clear)
+    return rects_overlap(r, g, clear) and not inside
+
+
 def segments(points):
     return list(zip(points, points[1:]))
 
@@ -179,16 +190,27 @@ def group_geometry(g, boxes):
     members = [boxes[i] for i in g.get("nodes", []) if i in boxes]
     if not members:
         return None
+    # A "box" group is a building block drawn as a box that holds its parts
+    # (whitebox view); any other group is a dotted boundary.
+    kind = "box" if g.get("kind") == "box" else "boundary"
+    sub = str(g.get("sublabel") or "") if kind == "box" else ""
     x0 = min(b[0] for b in members) - GROUP_PAD
-    y0 = min(b[1] for b in members) - GROUP_PAD_TOP
+    y0 = min(b[1] for b in members) - (BOX_GROUP_PAD_TOP_SUB if sub else GROUP_PAD_TOP)
     x1 = max(b[0] + b[2] for b in members) + GROUP_PAD
     y1 = max(b[1] + b[3] for b in members) + GROUP_PAD
-    label = str(g.get("label", "")).upper()
-    label_rect = (x0 + 12, y0 + 8, ceil_to(mono_width(label, 10, 0.06), GRID), 12)
+    if kind == "box":
+        label = str(g.get("label", ""))
+        w = ceil_to(max(sans_width(label, 13), mono_width(sub, 10.5)), 2 * GRID)
+        label_rect = ((x0 + x1) // 2 - w // 2, y0 + 8, w, 30 if sub else 16)
+    else:
+        label = str(g.get("label", "")).upper()
+        label_rect = (x0 + 12, y0 + 8, ceil_to(mono_width(label, 10, 0.06), GRID), 12)
     return {
         "id": g.get("id"),
+        "kind": kind,
         "rect": (x0, y0, x1 - x0, y1 - y0),
         "label": label,
+        "sublabel": sub,
         "label_rect": label_rect,
         "nodes": [i for i in g.get("nodes", []) if i in boxes],
     }
@@ -359,9 +381,10 @@ def _center_distance(e, boxes):
     return abs(a[0] - b[0]) + abs(a[1] - b[1])
 
 
-def place_label(text, pts, boxes, taken, lines, tips):
-    """Put the label on the longest segment where it hits nothing; try the
-    midpoint first, then slide toward the ends, then shorter segments."""
+def place_label(text, pts, boxes, taken, lines, tips, borders=()):
+    """Put the label on the longest segment where it hits nothing (and does
+    not sit on the outline of a "box" group); try the midpoint first, then
+    slide toward the ends, then shorter segments."""
     w, h = edge_label_size(text)
     segs = segments(pts)
     order = sorted(range(len(segs)),
@@ -379,6 +402,7 @@ def place_label(text, pts, boxes, taken, lines, tips):
             any(rects_overlap(r, b, LABEL_CLEAR) for b in boxes.values())
             or any(rects_overlap(r, t, LABEL_CLEAR) for t in taken)
             or any(rects_overlap(r, t) for t in tips)
+            or any(crosses_border(r, g, LABEL_CLEAR) for g in borders)
             or any(segment_hits_rect(a, b, r, 2) for a, b in lines)
             or any(segment_hits_rect(a, b, r, 2)
                    for j, (a, b) in enumerate(segs) if j != i)
@@ -404,6 +428,7 @@ def layout_boxes(spec):
                                   _center_distance(edges[i], boxes), i))
     routed = [None] * len(edges)
     taken = list(group_labels)
+    borders = [g["rect"] for g in groups if g["kind"] == "box"]
     lines, tips = [], []
     for i in order:
         e = edges[i]
@@ -412,7 +437,8 @@ def layout_boxes(spec):
             tips.append(arrow_tip_rect(pts[-1]))
         label_rect, label_seg = None, None
         if e.get("label"):
-            label_rect, label_seg = place_label(e["label"], pts, boxes, taken, lines, tips)
+            label_rect, label_seg = place_label(e["label"], pts, boxes, taken, lines, tips,
+                                                  borders)
             taken.append(label_rect)
             router.add_soft(label_rect)
         lines.extend(segments(pts))
@@ -466,10 +492,36 @@ def node_svg(n, rect, theme):
     return "".join(parts)
 
 
-def edge_label_svg(text, rect, theme):
+def group_box_svg(g, theme):
+    """A building block drawn as a box around its parts: filled, solid
+    outline, its name (and optional sublabel) centered in the header."""
+    x, y, w, h = g["rect"]
+    cx = x + w // 2
+    parts = [
+        f'<g data-group-id="{esc(g["id"])}">',
+        f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="10" ry="10" '
+        f'fill="{theme["container"]}" stroke="{theme["muted"]}" stroke-width="1"/>',
+    ]
+    if g["label"]:
+        parts.append(
+            f'<text x="{cx}" y="{y + 20 if g["sublabel"] else y + 21}" text-anchor="middle" '
+            f'font-family="{theme["font_label"]}" font-size="13" font-weight="600" '
+            f'fill="{theme["ink"]}">{esc(g["label"])}</text>'
+        )
+    if g["sublabel"]:
+        parts.append(
+            f'<text x="{cx}" y="{y + 34}" text-anchor="middle" '
+            f'font-family="{theme["font_mono"]}" font-size="10.5" '
+            f'fill="{theme["muted"]}">{esc(g["sublabel"])}</text>'
+        )
+    parts.append("</g>")
+    return "".join(parts)
+
+
+def edge_label_svg(text, rect, theme, fill=None):
     x, y, w, h = rect
     return (
-        f'<rect x="{x}" y="{y}" width="{w}" height="{h}" fill="{theme["paper"]}"/>'
+        f'<rect x="{x}" y="{y}" width="{w}" height="{h}" fill="{fill or theme["paper"]}"/>'
         f'<text x="{x + w // 2}" y="{y + 12}" text-anchor="middle" '
         f'font-family="{theme["font_mono"]}" font-size="10.5" fill="{theme["muted"]}">'
         f"{esc(text)}</text>"
@@ -483,6 +535,9 @@ def render_boxes(spec, theme):
 
     for g in lay["groups"]:
         gx, gy, gw, gh = g["rect"]
+        if g["kind"] == "box":
+            body.append(group_box_svg(g, theme))
+            continue
         body.append(
             f'<rect x="{gx}" y="{gy}" width="{gw}" height="{gh}" rx="10" ry="10" '
             f'fill="none" stroke="{theme["hairline"]}" stroke-width="1" stroke-dasharray="2 5"/>'
@@ -508,7 +563,11 @@ def render_boxes(spec, theme):
 
     for r in lay["edges"]:
         if r["label_rect"]:
-            body.append(edge_label_svg(r["spec"]["label"], r["label_rect"], theme))
+            # A label inside a "box" group is backed with the group's fill.
+            inside = any(g["kind"] == "box" and rects_overlap(r["label_rect"], g["rect"])
+                         for g in lay["groups"])
+            body.append(edge_label_svg(r["spec"]["label"], r["label_rect"], theme,
+                                       theme["container"] if inside else None))
 
     inner = "".join(body)
     return x1 - x0, y1 - y0, f'<g transform="translate({-x0},{-y0})">{inner}</g>'

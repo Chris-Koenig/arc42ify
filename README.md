@@ -93,7 +93,7 @@ arc42ify/
 │   │   ├── render_diagram.py      — JSON-Spec → editoriales SVG (keine Abhängigkeiten)
 │   │   ├── self_check.py          — Lint für Spec + gerendertes SVG
 │   │   └── scaffold.py            — legt docs/arc42/ im Ziel-Repo an
-│   └── assets/templates/          — 5 Beispiel-Specs + gerenderte SVGs zum Abschauen
+│   └── assets/templates/          — 6 Beispiel-Specs + gerenderte SVGs zum Abschauen
 ├── docs/
 │   ├── installation.md            — Installation je Host, Team-Setup, Fehlersuche
 │   ├── usage.md                   — Aufträge, Diagramme ändern und prüfen, CI

@@ -19,7 +19,7 @@ relevanten Code-Änderung.
   arc42-konforme Markdown-Kapitel plus editoriale SVG-Diagramme erzeugen —
   direkt im Repo unter `docs/arc42/`.
 - Ein **Renderer** ohne Fremdabhängigkeiten (`render_diagram.py`): drei
-  Diagrammarten (`boxes`, `layers`, `sequence`) mit fünf Vorlagen, ein
+  Diagrammarten (`boxes`, `layers`, `sequence`) mit sechs Vorlagen, ein
   Design-System (ein Akzent, keine Schatten,
   Hairline-Rahmen, 4px-Raster), lauffähig in jeder Sandbox, jedem CI-Runner,
   offline.

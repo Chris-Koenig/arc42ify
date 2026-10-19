@@ -3,7 +3,7 @@
   "title": "Whitebox Bestellungen — Ebene 2",
   "subtitle": "Bohnenwerk-Shop · arc42 Kapitel 5.2",
   "groups": [
-    {"id": "best", "label": "bestellungen/", "nodes": ["service", "outbox", "zahlung"]}
+    {"id": "best", "kind": "box", "label": "Bestellungen", "sublabel": "Ebene 1 · bestellungen/", "nodes": ["service", "outbox", "zahlung"]}
   ],
   "nodes": [
     {"id": "checkout", "label": "Checkout", "sublabel": "Nachbarbaustein", "kind": "external", "col": 0, "row": 0},
@@ -15,13 +15,13 @@
     {"id": "db", "label": "PostgreSQL", "sublabel": "bestellung · outbox", "kind": "external", "col": 2, "row": 1}
   ],
   "edges": [
-    {"from": "checkout", "to": "service", "label": "anlegen()"},
-    {"from": "worker", "to": "outbox", "label": "holt neue Events"},
-    {"from": "integration", "to": "zahlung", "label": "Webhook-Event"},
-    {"from": "service", "to": "outbox", "label": "Event"},
-    {"from": "zahlung", "to": "outbox", "label": "Event"},
+    {"from": "checkout", "to": "service", "label": "IF-01 anlegen()"},
+    {"from": "worker", "to": "outbox", "label": "IF-03 holt Events"},
+    {"from": "integration", "to": "zahlung", "label": "IF-02 Webhook"},
+    {"from": "service", "to": "outbox", "label": "IF-04"},
+    {"from": "zahlung", "to": "outbox", "label": "IF-04"},
     {"from": "service", "to": "db", "label": "Bestellung"},
-    {"from": "outbox", "to": "db", "label": "gleiche Transaktion"},
+    {"from": "outbox", "to": "db", "label": "selbe Transaktion"},
     {"from": "zahlung", "to": "db", "label": "Zahlstatus"}
   ]
 }

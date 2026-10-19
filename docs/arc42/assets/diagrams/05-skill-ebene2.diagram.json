@@ -5,7 +5,7 @@
   "nodes": [
     {"id": "refs", "label": "references/", "sublabel": "4 × Markdown", "col": 0, "row": 0},
     {"id": "skillmd", "label": "SKILL.md", "sublabel": "Ablauf + Regeln", "kind": "focal", "col": 1, "row": 0},
-    {"id": "templates", "label": "assets/templates/", "sublabel": "5 Beispiel-Specs", "col": 2, "row": 0},
+    {"id": "templates", "label": "assets/templates/", "sublabel": "6 Beispiel-Specs", "col": 2, "row": 0},
     {"id": "scaffold", "label": "scaffold.py", "sublabel": "Gerüst docs/arc42/", "col": 0, "row": 1},
     {"id": "render", "label": "render_diagram.py", "sublabel": "Spec → SVG", "col": 1, "row": 1},
     {"id": "check", "label": "self_check.py", "sublabel": "Spec + SVG prüfen", "col": 2, "row": 1}

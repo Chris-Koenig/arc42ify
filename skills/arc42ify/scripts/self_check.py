@@ -10,7 +10,8 @@ the spec (dangling references, too many focal elements, diagrams too small
 to be worth drawing) and then the actual geometry the renderer produces:
 edges that run through a box or on top of each other, edge labels that
 overlap a box, another label or another edge, text that does not fit its
-box, and groups that swallow nodes they do not contain.
+box, groups that swallow nodes they do not contain, and edge labels that sit
+on the outline of a "box" group.
 """
 import json
 import os
@@ -55,6 +56,9 @@ def check_spec(spec):
             missing = [nid for nid in g.get("nodes", []) if nid not in ids]
             if missing:
                 problems.append(f"group {g.get('id')!r} references unknown nodes: {missing}")
+            if g.get("kind") not in (None, "box"):
+                problems.append(f"group {g.get('id')!r} has unknown kind {g.get('kind')!r} "
+                                "— use \"box\" or leave it out")
 
     elif kind == "layers":
         layers = spec.get("layers", [])
@@ -134,6 +138,8 @@ def check_boxes_geometry(spec):
         for g in groups:
             if g["label"] and rd.rects_overlap(r, g["label_rect"]):
                 problems.append(f"{what} overlaps the label of group {g['id']!r}")
+            if g["kind"] == "box" and rd.crosses_border(r, g["rect"], 2):
+                problems.append(f"{what} sits on the outline of group {g['id']!r}")
         for f in edges:
             segs = rd.segments(f["points"])
             if f is e:
@@ -145,6 +151,12 @@ def check_boxes_geometry(spec):
                 problems.append(f"{what} covers the arrowhead of edge {name(f)}")
 
     for i, g in enumerate(groups):
+        if g["kind"] == "box":
+            gw = g["rect"][2]
+            if rd.sans_width(g["label"], 13) > gw - 24:
+                problems.append(f"label of group {g['id']!r} is wider than the group — shorten it")
+            if g["sublabel"] and rd.mono_width(g["sublabel"], 10.5) > gw - 24:
+                problems.append(f"sublabel of group {g['id']!r} is wider than the group — shorten it")
         for nid, b in boxes.items():
             if nid not in g["nodes"] and rd.rects_overlap(g["rect"], b):
                 problems.append(

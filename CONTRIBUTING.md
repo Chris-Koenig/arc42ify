@@ -1,7 +1,7 @@
 # Contributing
 
 Danke für Interesse an `arc42ify`. Der Umfang ist bewusst klein gehalten
-(drei Diagrammarten mit fünf Vorlagen, drei Scripts) — Beiträge, die diese Einfachheit
+(drei Diagrammarten mit sechs Vorlagen, drei Scripts) — Beiträge, die diese Einfachheit
 erhalten, sind am willkommensten.
 
 ## Einen neuen Diagrammtyp ergänzen

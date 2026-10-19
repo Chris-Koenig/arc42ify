@@ -1,0 +1,23 @@
+{
+  "kind": "boxes",
+  "title": "Whitebox Bestellungen — Ebene 2",
+  "subtitle": "arc42 · Kapitel 5.2",
+  "groups": [
+    {"id": "wb", "kind": "box", "label": "Bestellungen", "sublabel": "Ebene 1 · orders/", "nodes": ["api", "logic", "store"]}
+  ],
+  "nodes": [
+    {"id": "checkout", "label": "Checkout", "sublabel": "Nachbarbaustein", "kind": "external", "col": 0, "row": 0},
+    {"id": "psp", "label": "Payment Provider", "sublabel": "Fremdsystem", "kind": "external", "col": 0, "row": 2},
+    {"id": "api", "label": "Bestell-API", "sublabel": "api.py", "kind": "focal", "col": 1, "row": 0},
+    {"id": "logic", "label": "Zustandsautomat", "sublabel": "status.py", "col": 1, "row": 1},
+    {"id": "store", "label": "Repository", "sublabel": "repo.py", "col": 1, "row": 2},
+    {"id": "db", "label": "PostgreSQL", "kind": "external", "col": 2, "row": 2}
+  ],
+  "edges": [
+    {"from": "checkout", "to": "api", "label": "IF-01 anlegen()"},
+    {"from": "psp", "to": "api", "label": "IF-02 Webhook", "style": "dashed"},
+    {"from": "api", "to": "logic", "label": "IF-03"},
+    {"from": "logic", "to": "store", "label": "IF-04"},
+    {"from": "store", "to": "db", "label": "SQL"}
+  ]
+}
