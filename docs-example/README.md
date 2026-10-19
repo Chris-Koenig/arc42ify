@@ -16,7 +16,7 @@ Der Ordner hat dieselbe Struktur, die der Skill in deinem Repo anlegt:
 |---|---|
 | [1 Einführung](docs/arc42/01-einfuehrung-und-ziele.md) | Drei priorisierte Qualitätsziele mit Motivation — sie tragen alle späteren Entscheidungen. |
 | [3 Kontext](docs/arc42/03-kontextabgrenzung.md) | Diagramm für den fachlichen Kontext, Tabelle für die technischen Details. |
-| [5 Bausteine](docs/arc42/05-bausteinsicht.md) | Ebene 1 plus eine Whitebox (Ebene 2) nur für den Baustein, an dem das wichtigste Qualitätsziel hängt. |
+| [5 Bausteine](docs/arc42/05-bausteinsicht.md) | Ebene 1 plus eine Whitebox (Ebene 2) nur für den Baustein, an dem das wichtigste Qualitätsziel hängt: der Baustein als Box, gefüllt mit seinen Komponenten, außen die Nachbarn. Je Komponente eine Blackbox, alle Schnittstellen mit ID und Steckbrief — eine ist ehrlich als **offen** markiert. |
 | [6 Laufzeit](docs/arc42/06-laufzeitsicht.md) | Zwei Abläufe mit Sequenzdiagramm, ein dritter bewusst nur als Liste. |
 | [7 Verteilung](docs/arc42/07-verteilungssicht.md) | Gruppe als Cloud-Grenze, Kosten gegen die Budget-Randbedingung gerechnet. |
 | [8 Konzepte](docs/arc42/08-querschnittliche-konzepte.md) | Schichtenmodell als Überblick, danach Text und ein kurzes Codebeispiel. |

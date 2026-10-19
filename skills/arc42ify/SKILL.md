@@ -86,6 +86,11 @@ Ein Diagramm zuerst zu bauen und den Text dazu zu erfinden, produziert
 hübsche, aber inhaltsleere Doku — das ist genau der Fehler, den dieser
 Skill vermeiden soll.
 
+**Kapitel 5 (Bausteinsicht):** vorher `references/building-block-view.md`
+lesen. Komponenten (C4 Level 3) bekommen je eine Blackbox, jede angebotene
+Schnittstelle eine ID (`IF-01` …) und einen Steckbrief mit Vertrag,
+Fehlerverhalten und Garantien.
+
 ### 4. Diagramme erzeugen
 
 Für jedes Diagramm:
@@ -142,6 +147,7 @@ bewahren, nicht die ganze Doku neu schreiben. Diagramme immer über ihre
 | Datei | Wann lesen |
 |---|---|
 | `references/arc42-sections.md` | Immer zu Beginn — Kapitelübersicht, Quellen, Diagrammtyp je Kapitel |
+| `references/building-block-view.md` | Vor Kapitel 5 — Ebenen (inkl. C4-Zuordnung), Blackbox-Vorlage, Schnittstellen-Steckbrief |
 | `references/diagram-spec.md` | Bevor ein Diagramm gebaut wird — JSON-Format je `kind` |
 | `references/style-guide.md` | Nur bei Marken-/Farbanpassung nötig |
 | `references/multi-agent-usage.md` | Bei Fragen zur Installation in Claude Code, Copilot, Codex |
@@ -153,5 +159,7 @@ bewahren, nicht die ganze Doku neu schreiben. Diagramme immer über ihre
 - Jedes SVG öffnet einzeln im Browser, offline, ohne Netzwerkzugriff.
 - `self_check.py` für jede erzeugte Spec `OK` meldet.
 - Kein Kapitel besteht nur aus einem Diagramm ohne erklärenden Text.
+- Jede Komponente in Kapitel 5 nennt, welche Schnittstellen sie anbietet
+  und nutzt, und jede Schnittstellen-ID dort hat einen Steckbrief.
 - Ein Kapitel ohne verfügbare Information ist als solches markiert, nicht
   mit plausibel klingendem, aber erfundenem Inhalt gefüllt.

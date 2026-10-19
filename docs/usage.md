@@ -150,7 +150,7 @@ Den Pfad zu `scripts/` an deinen Installationsort anpassen (z. B.
 
 | Diagrammtyp (`kind`) | Wofür | arc42-Kapitel |
 |---|---|---|
-| `boxes` | Kontext, Bausteine, Verteilung — Knoten auf einem Raster, Kanten dazwischen, optionale Gruppen | 3, 5, 7 |
+| `boxes` | Kontext, Bausteine, Verteilung — Knoten auf einem Raster, Kanten dazwischen, optionale Gruppen; eine Gruppe mit `"kind": "box"` zeigt die Whitebox eines Bausteins | 3, 5, 7 |
 | `sequence` | Abläufe zwischen Beteiligten | 6 |
 | `layers` | Schichten mit Stichworten | 8 (ggf. 4) |
 

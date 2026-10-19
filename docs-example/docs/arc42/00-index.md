@@ -22,7 +22,7 @@ python3 scripts/self_check.py     assets/diagrams/<name>.diagram.json assets/dia
 | [2. Randbedingungen](02-randbedingungen.md) | vollständig | — |
 | [3. Kontextabgrenzung](03-kontextabgrenzung.md) | vollständig | Kontextdiagramm |
 | [4. Lösungsstrategie](04-loesungsstrategie.md) | vollständig | — |
-| [5. Bausteinsicht](05-bausteinsicht.md) | vollständig | Ebene 1, Whitebox Bestellungen |
+| [5. Bausteinsicht](05-bausteinsicht.md) | vollständig | Ebene 1, Whitebox Bestellungen, Schnittstellen |
 | [6. Laufzeitsicht](06-laufzeitsicht.md) | vollständig | Checkout, Röstplan-Cutoff |
 | [7. Verteilungssicht](07-verteilungssicht.md) | vollständig | Produktion |
 | [8. Querschnittliche Konzepte](08-querschnittliche-konzepte.md) | vollständig | Schichtenmodell |

@@ -86,6 +86,7 @@ arc42ify/
 │   ├── SKILL.md                   — Ablauf, Kapitelzuordnung, wann kein Diagramm
 │   ├── references/
 │   │   ├── arc42-sections.md      — alle 12 Kapitel: Inhalt, Quelle im Code, Diagrammtyp
+│   │   ├── building-block-view.md — Kapitel 5: Ebenen (inkl. C4), Blackbox, Schnittstellen
 │   │   ├── diagram-spec.md        — JSON-Format je Diagrammtyp
 │   │   ├── style-guide.md         — Design-Tokens (Farben, Schriften, Prinzipien)
 │   │   └── multi-agent-usage.md   — Kurzreferenz Installation je Host (für den Agenten)
@@ -93,7 +94,7 @@ arc42ify/
 │   │   ├── render_diagram.py      — JSON-Spec → editoriales SVG (keine Abhängigkeiten)
 │   │   ├── self_check.py          — Lint für Spec + gerendertes SVG
 │   │   └── scaffold.py            — legt docs/arc42/ im Ziel-Repo an
-│   └── assets/templates/          — 5 Beispiel-Specs + gerenderte SVGs zum Abschauen
+│   └── assets/templates/          — 6 Beispiel-Specs + gerenderte SVGs zum Abschauen
 ├── docs/
 │   ├── installation.md            — Installation je Host, Team-Setup, Fehlersuche
 │   ├── usage.md                   — Aufträge, Diagramme ändern und prüfen, CI
@@ -128,6 +129,9 @@ reines Python-Skript ohne Abhängigkeiten.
   tatsächlich ein Bild brauchen (3, 5, 6, 7, 8). Kein ER-Diagramm, kein
   Zustandsautomat; bei Bedarf als weiterer `kind` in `render_diagram.py`
   ergänzbar, siehe [CONTRIBUTING.md](CONTRIBUTING.md).
+- Gruppen lassen sich nicht verschachteln — eine Whitebox (`"kind": "box"`)
+  kann keine weitere Gruppe enthalten. Für tiefere Ebenen ein eigenes
+  Diagramm je Ebene zeichnen.
 - Kein automatischer PNG/PDF-Export (Diagramme sind SVG; für Präsentationen
   reicht `Browser → Drucken → PDF` oder ein Screenshot-Tool).
 - Marken-Onboarding (automatisches Auslesen einer Website-Farbe) ist nicht

@@ -140,6 +140,45 @@ class Router(unittest.TestCase):
                         self.assertEqual(v % rd.GRID, 0, f"{v} is off the grid in {attrs.strip()}")
 
 
+class BoxGroups(unittest.TestCase):
+    """A group with "kind": "box" draws a building block filled with its
+    parts (whitebox view) instead of a dotted boundary."""
+
+    SPEC = os.path.join(SKILL, "assets", "templates", "whitebox-diagram.json")
+
+    def test_box_group_is_a_filled_box_with_its_name(self):
+        theme = rd.DEFAULT_THEME
+        svg = rd.render_svg(load(self.SPEC))
+        group = re.search(r'<g data-group-id="wb">(.*?)</g>', svg).group(1)
+        self.assertIn(f'fill="{theme["container"]}" stroke="{theme["muted"]}"', group)
+        self.assertNotIn("stroke-dasharray", group)
+        self.assertIn(">Bestellungen</text>", group)
+        self.assertIn(">Ebene 1 · orders/</text>", group)
+
+    def test_box_group_holds_its_members_below_the_header(self):
+        lay = rd.layout_boxes(load(self.SPEC))
+        g = lay["groups"][0]
+        gx, gy, gw, gh = g["rect"]
+        for nid in g["nodes"]:
+            x, y, w, h = lay["boxes"][nid]
+            with self.subTest(node=nid):
+                self.assertTrue(gx < x and x + w < gx + gw and y + h < gy + gh)
+                self.assertGreaterEqual(y, g["label_rect"][1] + g["label_rect"][3])
+
+    def test_labels_inside_a_box_group_use_its_fill(self):
+        svg = rd.render_svg(load(self.SPEC))
+        container = rd.DEFAULT_THEME["container"]
+        self.assertRegex(svg, rf'fill="{container}"/><text[^>]*>IF-03</text>')
+        self.assertRegex(svg, rf'fill="{rd.DEFAULT_THEME["paper"]}"/><text[^>]*>SQL</text>')
+
+    def test_plain_groups_keep_the_dotted_boundary(self):
+        spec = load(self.SPEC)
+        del spec["groups"][0]["kind"]
+        svg = rd.render_svg(spec)
+        self.assertNotIn("data-group-id", svg)
+        self.assertIn('stroke-dasharray="2 5"', svg)
+
+
 def _on_border(p, rect):
     x, y, w, h = rect
     on_x = p[0] in (x, x + w) and y <= p[1] <= y + h
@@ -155,6 +194,9 @@ class CheckerCatchesDefects(unittest.TestCase):
         "boxes-label-too-long.json": "overlaps node 'a'",
         "boxes-nodes-overlap.json": "nodes 'b' and 'd' overlap",
         "boxes-group-swallows-node.json": "overlaps node 'b', which is not a member",
+        "boxes-group-unknown-kind.json": "group 'g' has unknown kind 'frame'",
+        "boxes-group-title-too-wide.json": "label of group 'g' is wider than the group",
+        "boxes-label-on-box-outline.json": "sits on the outline of group 'g'",
         "boxes-unknown-edge-target.json": "unknown 'to': 'zzz'",
         "boxes-too-many-focal.json": "3 focal nodes",
         "boxes-node-label-too-wide.json": "label of node 'c' is wider than its box",

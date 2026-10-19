@@ -32,7 +32,9 @@ python3 scripts/render_diagram.py <spec>.json <ziel>.svg
      "kind": "focal", "dir": "forward|none"}
   ],
   "groups": [
-    {"id": "g1", "label": "Systemgrenze", "nodes": ["sys", "db"]}
+    {"id": "g1", "label": "Systemgrenze", "nodes": ["sys", "db"]},
+    {"id": "g2", "kind": "box", "label": "Bestellungen",
+     "sublabel": "Ebene 1 · orders/", "nodes": ["a", "b"]}
   ]
 }
 ```
@@ -49,6 +51,15 @@ python3 scripts/render_diagram.py <spec>.json <ziel>.svg
   (z. B. „das ist unser Deploy", „das ist die Systemgrenze"). Optional.
   Die Grenze umschließt das Rechteck aller Mitglieder — ein Nicht-Mitglied
   darf nicht in diesen Zeilen/Spalten dazwischen liegen.
+- `"kind": "box"` an einer Gruppe zeichnet statt der gestrichelten Grenze
+  einen **Baustein, der mit seinen Teilen gefüllt ist**: gefüllte Fläche,
+  durchgezogener Rahmen, `label` (und optional `sublabel`) zentriert oben.
+  Das ist die Whitebox-Sicht der Bausteinsicht — der Baustein aus Ebene 1
+  als Box, darin die Bausteine aus Ebene 2, außen die Nachbarn als
+  `external`. Kanten, die den Rahmen überqueren, zeigen die Verbindungen
+  zur Außenwelt. Beispiel: `assets/templates/whitebox-diagram.json`.
+  `label`/`sublabel` müssen in die Breite der Gruppe passen (bei einer
+  Spalte ca. 25 Zeichen); Kanten-Labels landen nie auf dem Rahmen.
 - Kanten führt das Script selbst: rechtwinklig, **um alle Boxen herum**
   (nie hindurch), mit möglichst wenigen Knicken. Jede Kante bekommt einen
   eigenen Anschlusspunkt an der Box, auch wenn mehrere Kanten dieselbe Seite
@@ -58,6 +69,9 @@ python3 scripts/render_diagram.py <spec>.json <ziel>.svg
 - Kanten-Labels kurz halten: Zwischen zwei Nachbarn in derselben Zeile ist
   Platz für etwa 20 Zeichen. Längeres gehört in die Tabelle unter dem
   Diagramm; `self_check.py` meldet Labels, die nicht passen.
+- In der Bausteinsicht (Komponentenebene) beginnt das Label mit der
+  Schnittstellen-ID, z. B. `IF-02 Webhook-Event`; Details stehen im
+  Steckbrief (siehe `references/building-block-view.md`).
 
 ## `kind: "layers"` — Schichtenmodell (Kapitel 8, ggf. 4)
 
@@ -113,9 +127,10 @@ Renderer zeichnet. Es meldet mit Exit-Code 1:
   (verletzt „ein Akzent, 1–2 Fokuspunkte"), zu kleine Diagramme;
 - Kanten, die durch eine Box laufen oder auf einer anderen Kante liegen;
 - Kanten-Labels, die eine Box, ein anderes Label, eine andere Kante oder
-  eine Pfeilspitze überdecken;
+  eine Pfeilspitze überdecken oder auf dem Rahmen einer `box`-Gruppe sitzen;
 - Text, der nicht in seine Box, Schicht oder Lane passt;
-- Gruppen, deren Grenze einen Knoten einschließt, der nicht dazugehört;
+- Gruppen, deren Grenze einen Knoten einschließt, der nicht dazugehört,
+  und `box`-Gruppen, deren Titel nicht in die Gruppe passt;
 - im SVG: fehlender `<title>`, Schatten, externe URLs.
 
 Bei `FAIL`: Label kürzen oder `col`/`row` umstellen, neu rendern, erneut
