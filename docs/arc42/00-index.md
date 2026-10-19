@@ -17,7 +17,7 @@ Wie man den Skill *benutzt*, steht nicht hier, sondern in
 | [2. Randbedingungen](02-randbedingungen.md) | vollständig | — |
 | [3. Kontextabgrenzung](03-kontextabgrenzung.md) | vollständig | Kontextdiagramm |
 | [4. Lösungsstrategie](04-loesungsstrategie.md) | vollständig | — |
-| [5. Bausteinsicht](05-bausteinsicht.md) | vollständig | Ebene 1, Whitebox Skill |
+| [5. Bausteinsicht](05-bausteinsicht.md) | vollständig | Ebene 1, Whitebox Skill, Whitebox `render_diagram.py`, Schnittstellen |
 | [6. Laufzeitsicht](06-laufzeitsicht.md) | vollständig | Doku erzeugen, `boxes`-Diagramm rendern |
 | [7. Verteilungssicht](07-verteilungssicht.md) | vollständig | Verteilung |
 | [8. Querschnittliche Konzepte](08-querschnittliche-konzepte.md) | vollständig | Schichtenmodell |
